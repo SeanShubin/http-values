@@ -4,7 +4,7 @@ import org.scalatest.FunSuite
 
 class HeadersTest extends FunSuite {
 
-  import Headers._
+  import com.seanshubin.http.values.Headers._
 
   test("get no content type") {
     val headers = Map("Connection" -> "keep-alive")

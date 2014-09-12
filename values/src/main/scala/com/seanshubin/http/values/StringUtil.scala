@@ -11,7 +11,7 @@ object StringUtil {
     multipleLineString
   }
 
-  def bytesToMultipleLineString(caption:String, bytes: Seq[Byte]): Seq[String] = {
+  def bytesToMultipleLineString(caption: String, bytes: Seq[Byte]): Seq[String] = {
     val header = s"$caption: ${bytes.size} bytes"
     val bytesLines: Seq[String] = bytes.grouped(hexGroupSize).map(bytesToString).toSeq.map("  " + _)
     val multipleLineString = header +: bytesLines

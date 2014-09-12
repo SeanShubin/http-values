@@ -27,26 +27,26 @@ class ResponseValueTest extends FunSuite with EasyMockSugar {
 
   test("text response value as text") {
     val responseValue = ResponseValue(200, "Hello, world!".getBytes(StandardCharsets.UTF_8), Map("Content-Type" -> "text/plain; charset=utf-8"))
-    val actual = responseValue.toMultipleLineString.mkString("\n")
-    println(actual)
-    val expected =
-      """status code = 200
-        |body: 1 lines
-        |  "Hello, world!"
-        |header: 1 entries
-        |  Content-Type -> "text/plain; charset=utf-8"""".stripMargin
+    val actual = responseValue.toMultipleLineString
+    val expected = Seq(
+      "status code = 200",
+      "body: 1 lines",
+      "  \"Hello, world!\"",
+      "header: 1 entries",
+      "  Content-Type -> \"text/plain; charset=utf-8\""
+    )
     assert(actual === expected)
   }
 
   test("binary response value as text") {
     val responseValue = ResponseValue(200, "Hello, world!".getBytes(StandardCharsets.UTF_8), Map())
-    val actual = responseValue.toMultipleLineString.mkString("\n")
-    println(actual)
-    val expected =
-      """status code = 200
-        |body: 13 bytes
-        |  48 65 6c 6c 6f 2c 20 77 6f 72 6c 64 21           Hello, world!
-        |header: 0 entries""".stripMargin
+    val actual = responseValue.toMultipleLineString
+    val expected = Seq(
+      "status code = 200",
+      "body: 13 bytes",
+      "  48 65 6c 6c 6f 2c 20 77 6f 72 6c 64 21           Hello, world!",
+      "header: 0 entries"
+    )
     assert(actual === expected)
   }
 }

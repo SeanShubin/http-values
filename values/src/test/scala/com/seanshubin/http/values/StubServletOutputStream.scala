@@ -1,7 +1,7 @@
 package com.seanshubin.http.values
 
 import java.io.OutputStream
-import javax.servlet.{WriteListener, ServletOutputStream}
+import javax.servlet.{ServletOutputStream, WriteListener}
 
 class StubServletOutputStream(backingOutputStream: OutputStream) extends ServletOutputStream {
   override def isReady: Boolean = ???

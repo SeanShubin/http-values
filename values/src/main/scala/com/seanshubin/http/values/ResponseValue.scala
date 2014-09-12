@@ -1,7 +1,9 @@
 package com.seanshubin.http.values
 
 case class ResponseValue(statusCode: Int, body: Seq[Byte], headers: Map[String, String]) {
-  import Headers._
+
+  import com.seanshubin.http.values.Headers._
+
   def text: String = {
     maybeCharset match {
       case Some(charset) => new String(body.toArray, charset)
@@ -40,7 +42,7 @@ case class ResponseValue(statusCode: Int, body: Seq[Byte], headers: Map[String, 
 }
 
 object ResponseValue {
-  def isSuccess(statusCode:Int):Boolean = statusCode >= 200 && statusCode <= 399
+  def isSuccess(statusCode: Int): Boolean = statusCode >= 200 && statusCode <= 399
 
   def fromText(statusCode: Int, contentType: ContentType, text: String, headers: Map[String, String]) = {
     val body = text.getBytes(contentType.charset)

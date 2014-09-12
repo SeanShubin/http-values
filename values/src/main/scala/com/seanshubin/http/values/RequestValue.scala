@@ -24,15 +24,15 @@ case class RequestValue(uriString: String, method: String, body: Seq[Byte], head
       headersToMultipleLineString
   }
 
-  def bodyToMultipleLineString:Seq[String] = {
+  def bodyToMultipleLineString: Seq[String] = {
     maybeCharset match {
       case Some(charset) => StringUtil.textToMultipleLineString("body", new String(body.toArray, charset))
       case None => StringUtil.bytesToMultipleLineString("body", body)
     }
   }
 
-  def headersToMultipleLineString:Seq[String] = {
-    def headerToString(header:(String, String)):String = {
+  def headersToMultipleLineString: Seq[String] = {
+    def headerToString(header: (String, String)): String = {
       val (key, value) = header
       val quotedValue = StringUtil.doubleQuote(value)
       s"$key -> $quotedValue"

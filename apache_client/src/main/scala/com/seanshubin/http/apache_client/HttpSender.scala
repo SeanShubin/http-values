@@ -1,6 +1,6 @@
 package com.seanshubin.http.apache_client
 
-import com.seanshubin.http.values.{IoUtil, ResponseValue, RequestValue, Sender}
+import com.seanshubin.http.values.{IoUtil, RequestValue, ResponseValue, Sender}
 import org.apache.http.Header
 import org.apache.http.client.methods._
 import org.apache.http.impl.client.HttpClients
@@ -32,7 +32,8 @@ object HttpSender {
     "put" -> ((request: RequestValue) => withEntity(new HttpPut(request.uri), request)),
     "patch" -> ((request: RequestValue) => withEntity(new HttpPatch(request.uri), request))
   )
-  def withEntity(request:HttpEntityEnclosingRequestBase, requestValue:RequestValue):HttpUriRequest = {
+
+  def withEntity(request: HttpEntityEnclosingRequestBase, requestValue: RequestValue): HttpUriRequest = {
     val repeatableEntity = new RepeatableEntity(requestValue.body)
     request.setEntity(repeatableEntity)
     request
