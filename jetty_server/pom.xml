@@ -14,6 +14,11 @@
             <version>${pom.parent.version}</version>
         </dependency>
         <dependency>
+            <groupId>com.seanshubin</groupId>
+            <artifactId>http-apache_client</artifactId>
+            <version>${pom.parent.version}</version>
+        </dependency>
+        <dependency>
             <groupId>org.scala-lang</groupId>
             <artifactId>scala-library</artifactId>
         </dependency>
