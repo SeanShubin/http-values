@@ -17,6 +17,7 @@
             <groupId>com.seanshubin</groupId>
             <artifactId>http-apache_client</artifactId>
             <version>${pom.parent.version}</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.scala-lang</groupId>
