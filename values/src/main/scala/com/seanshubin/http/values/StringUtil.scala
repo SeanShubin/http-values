@@ -39,6 +39,14 @@ object StringUtil {
     else "."
   }
 
+  def getExtension(name: String): Option[String] = {
+    val lastDot = name.lastIndexOf('.')
+    val maybeExtension =
+      if (name.lastIndexOf('.') == -1) None
+      else Some(name.substring(lastDot))
+    maybeExtension
+  }
+
   def escape(target: String): String = {
     target.flatMap {
       case '\n' => "\\n"

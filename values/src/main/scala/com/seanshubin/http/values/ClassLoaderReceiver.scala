@@ -12,7 +12,7 @@ class ClassLoaderReceiver(classLoader: ClassLoader,
     if (inputStream == null) {
       throw new RuntimeException(s"Unable to find $resourceName on the class path")
     } else {
-      val maybeExtension = getExtension(request.uriString)
+      val maybeExtension = StringUtil.getExtension(request.uriString)
       maybeExtension match {
         case Some(extension) =>
           val maybeContentType = contentTypeByExtension.get(extension)
@@ -30,14 +30,6 @@ class ClassLoaderReceiver(classLoader: ClassLoader,
           throw new RuntimeException(s"Unable to find extension for ${request.uriString} (needed to compute content type)")
       }
     }
-  }
-
-  private def getExtension(name: String): Option[String] = {
-    val lastDot = name.lastIndexOf('.')
-    val maybeExtension =
-      if (name.lastIndexOf('.') == -1) None
-      else Some(name.substring(lastDot))
-    maybeExtension
   }
 
   private def createInputStreamFor(resourceName: String): InputStream = {
