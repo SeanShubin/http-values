@@ -1,4 +1,4 @@
-<project>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><project>
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.seanshubin</groupId>
     <artifactId>http</artifactId>
@@ -100,7 +100,7 @@
             <dependency>
                 <groupId>org.eclipse.jetty</groupId>
                 <artifactId>jetty-server</artifactId>
-                <version>9.2.2.v20140723</version>
+                <version>9.2.3.v20140905</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.httpcomponents</groupId>
