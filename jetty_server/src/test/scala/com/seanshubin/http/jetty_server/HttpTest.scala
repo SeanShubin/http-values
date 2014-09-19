@@ -46,6 +46,5 @@ class HttpTest extends FunSuite {
     assert(actualResponse.statusCode === 200)
     assert(actualResponse.headers("Content-Type") === "text/plain; charset=UTF-8")
     assert(actualResponse.headers("Content-Length") === "13")
-    assert(actualResponse.headers("Server") === "Jetty(9.2.2.v20140723)")
   }
 }
