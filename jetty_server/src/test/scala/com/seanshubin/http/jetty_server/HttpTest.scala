@@ -9,7 +9,10 @@ class HttpTest extends FunSuite {
   test("http request") {
     val sender: Sender = new HttpSender
     var requests: Seq[RequestValue] = Seq()
-    val expectedResponse = ResponseValue(200, "Hello, world!".getBytes("utf-8"), Map("Content-Type" -> "text/plain; charset=utf-8"))
+    val expectedResponse = ResponseValue(
+      statusCode = 200,
+      body = "Hello, world!".getBytes("utf-8"),
+      headers = Map("Content-Type" -> "text/plain; charset=utf-8"))
     val receiver = new Receiver {
       override def receive(request: RequestValue): ResponseValue = {
         requests = requests :+ request
@@ -21,7 +24,11 @@ class HttpTest extends FunSuite {
     val handler = new ReceiverToJettyHandler(receiver)
     server.setHandler(handler)
     server.start()
-    val sentRequest: RequestValue = RequestValue(s"http://localhost:$port/greeting", "get", Seq(), Map())
+    val sentRequest: RequestValue = RequestValue(
+      uriString = s"http://localhost:$port/greeting",
+      method = "get",
+      body = Seq(),
+      headers = Map())
     val expectedRequest: RequestValue = RequestValue(
       s"/greeting",
       "GET",
