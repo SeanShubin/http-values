@@ -10,8 +10,8 @@
     </properties>
     <modules>
         <module>core</module>
-        <module>jetty-server</module>
-        <module>apache-client</module>
+        <module>server-jetty</module>
+        <module>client-apache</module>
     </modules>
     <repositories>
         <repository>

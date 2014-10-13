@@ -1,0 +1,31 @@
+{
+    "searchPaths": [
+        [ "client-apache", "target", "http-values-client-apache-1.0-SNAPSHOT.jar" ]
+    ],
+    "styleSheet": [ "client-apache", "dependency.css" ],
+    "relevantDependencyPattern": {
+        "includeRegex": [ "com/seanshubin/http/values/.*" ],
+        "excludeRegex": [ ]
+    },
+    "trimRegex": "^com/seanshubin/http/values/",
+    "classFileNamePattern": {
+        "includeRegex": [ ".*\\.class" ],
+        "excludeRegex": [ ]
+    },
+    "zipFileNamePattern": {
+        "includeRegex": [ ".*\\.zip", ".*\\.war", ".*\\.jar" ],
+        "excludeRegex": [ ]
+    },
+    "generatedReportDirectory": [ "client-apache", "target", "dependency-report" ],
+    "classLimits": {
+        "depth": 11,
+        "complexity": 100,
+        "cycleCount": 0
+    },
+    "packageLimits": {
+        "depth": 4,
+        "complexity": 10,
+        "cycleCount": 0
+    },
+    "failIfAnyLimitExceeded": true
+}
