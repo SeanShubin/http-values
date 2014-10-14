@@ -6,3 +6,6 @@
 **/target
 generated
 local-config
+*~
+*#
+.#*
