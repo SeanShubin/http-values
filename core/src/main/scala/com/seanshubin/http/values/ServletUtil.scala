@@ -4,7 +4,6 @@ import javax.servlet.http.{HttpServletRequest, HttpServletResponse}
 
 import scala.collection.JavaConversions
 
-
 object ServletUtil {
   def writeValue(value: ResponseValue, response: HttpServletResponse): Unit = {
     val ResponseValue(statusCode, body, headers) = value

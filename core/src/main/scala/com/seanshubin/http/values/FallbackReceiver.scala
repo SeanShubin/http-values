@@ -2,14 +2,19 @@ package com.seanshubin.http.values
 
 class FallbackReceiver(receiver:Receiver,
                        fallback:Receiver,
-                       exceptionHandler:RuntimeException => Unit) extends Receiver {
+                       requestEvent:RequestValue => Unit,
+                       responseEvent:(RequestValue, ResponseValue) => Unit,
+                       exceptionEvent:RuntimeException => Unit) extends Receiver {
   override def receive(request: RequestValue): ResponseValue = {
-    try {
-       receiver.receive(request)
+    val response = try {
+      requestEvent(request)
+      receiver.receive(request)
     } catch {
       case ex:RuntimeException =>
-        exceptionHandler(ex)
+        exceptionEvent(ex)
         fallback.receive(request)
     }
+    responseEvent(request, response)
+    response
   }
 }
