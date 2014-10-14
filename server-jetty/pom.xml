@@ -5,9 +5,20 @@
         <artifactId>http-values</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-    <artifactId>http-values-core</artifactId>
-    <name>http-values-core</name>
+    <artifactId>http-values-server-jetty</artifactId>
+    <name>http-values-server-jetty</name>
     <dependencies>
+        <dependency>
+            <groupId>com.seanshubin</groupId>
+            <artifactId>http-values-core</artifactId>
+            <version>${pom.parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.seanshubin</groupId>
+            <artifactId>http-values-client-apache</artifactId>
+            <version>${pom.parent.version}</version>
+            <scope>test</scope>
+        </dependency>
         <dependency>
             <groupId>org.scala-lang</groupId>
             <artifactId>scala-library</artifactId>
@@ -21,9 +32,8 @@
             <artifactId>scalatest_2.11</artifactId>
         </dependency>
         <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <version>3.1.0</version>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-server</artifactId>
         </dependency>
     </dependencies>
     <build>
@@ -55,7 +65,7 @@
                                 <configuration>
                                     <mainClass>com.seanshubin.dependency.console.ConsoleApplication</mainClass>
                                     <arguments>
-                                        <argument>core/dependency.json</argument>
+                                        <argument>server-jetty/dependency.json</argument>
                                     </arguments>
                                 </configuration>
                             </execution>
