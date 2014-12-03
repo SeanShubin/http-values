@@ -34,14 +34,19 @@ class HttpTest extends FunSuite {
       "GET",
       Seq(),
       Map("Connection" -> "keep-alive",
-        "User-Agent" -> "Apache-HttpClient/4.3.5 (java 1.5)",
         "Host" -> s"localhost:$port",
         "Accept-Encoding" -> "gzip,deflate"
       ))
     val actualResponse = sender.send(sentRequest)
     server.stop()
+    val actualRequest = requests(0)
     assert(requests.size === 1)
-    assert(requests(0) === expectedRequest)
+    assert(actualRequest.uriString === expectedRequest.uriString)
+    assert(actualRequest.method === expectedRequest.method)
+    assert(actualRequest.body === expectedRequest.body)
+    assert(actualRequest.headers("Connection") === expectedRequest.headers("Connection"))
+    assert(actualRequest.headers("Host") === expectedRequest.headers("Host"))
+    assert(actualRequest.headers("Accept-Encoding") === expectedRequest.headers("Accept-Encoding"))
     assert(actualResponse.body === "Hello, world!".getBytes("utf-8").toSeq)
     assert(actualResponse.statusCode === 200)
     assert(actualResponse.headers("Content-Type") === "text/plain; charset=UTF-8")
