@@ -157,4 +157,11 @@
             </plugins>
         </pluginManagement>
     </build>
+    <distributionManagement>
+        <repository>
+            <id>sean-repository</id>
+            <name>Sean Shubin's Maven Repository</name>
+            <url>http://104.236.230.105:8081/nexus/content/repositories/sean-repository/</url>
+        </repository>
+    </distributionManagement>
 </project>
