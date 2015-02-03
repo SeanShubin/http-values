@@ -13,16 +13,6 @@
         <module>server-jetty</module>
         <module>client-apache</module>
     </modules>
-    <repositories>
-        <repository>
-            <id>sean</id>
-            <name>sean</name>
-            <url>http://thoughtfulcraftsmanship.com/nexus/content/repositories/sean/</url>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
-    </repositories>
     <pluginRepositories>
         <pluginRepository>
             <id>onejar</id>
