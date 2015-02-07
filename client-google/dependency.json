@@ -1,13 +1,13 @@
 {
   "searchPaths": [
     [
-      "server-jetty",
+      "client-google",
       "target",
-      "http-values-server-jetty-1.0-SNAPSHOT.jar"
+      "http-values-client-google-1.0-SNAPSHOT.jar"
     ]
   ],
   "styleSheet": [
-    "server-jetty",
+    "client-google",
     "dependency.css"
   ],
   "relevantDependencyPattern": {
@@ -28,7 +28,7 @@
     "excludeRegex": []
   },
   "generatedReportDirectory": [
-    "server-jetty",
+    "client-google",
     "target",
     "dependency-report"
   ],

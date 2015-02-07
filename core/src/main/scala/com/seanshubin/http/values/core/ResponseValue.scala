@@ -39,6 +39,14 @@ case class ResponseValue(statusCode: Int, body: Seq[Byte], headers: Map[String, 
     caption +: headers.map(headerToString).toSeq.map("  " + _)
   }
 
+  def withLowerCaseHeaderKeys: ResponseValue = {
+    def keyToLowerCase(entry: (String, String)) = {
+      val (key, value) = entry
+      (key.toLowerCase, value)
+    }
+    val newHeaders = headers.map(keyToLowerCase)
+    copy(headers = newHeaders)
+  }
 }
 
 object ResponseValue {
