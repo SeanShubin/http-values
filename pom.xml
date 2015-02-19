@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<project>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><project>
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.seanshubin</groupId>
     <artifactId>http-values</artifactId>
@@ -48,12 +47,12 @@
             <dependency>
                 <groupId>org.eclipse.jetty</groupId>
                 <artifactId>jetty-server</artifactId>
-                <version>9.2.7.v20150116</version>
+                <version>9.2.8.v20150217</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.httpcomponents</groupId>
                 <artifactId>httpclient</artifactId>
-                <version>4.3.6</version>
+                <version>4.4</version>
             </dependency>
             <dependency>
                 <groupId>com.google.http-client</groupId>
