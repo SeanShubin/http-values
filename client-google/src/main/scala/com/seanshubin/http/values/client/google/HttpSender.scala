@@ -23,7 +23,7 @@ class HttpSender extends Sender {
   def headerToEntry(entry: (String, AnyRef)): (String, String) = {
     val (key, listAsObject) = entry
     val javaList = listAsObject.asInstanceOf[java.util.List[_]]
-    val seq:Seq[_] = JavaConversions.asScalaBuffer(javaList)
+    val seq: Seq[_] = JavaConversions.asScalaBuffer(javaList)
     val value = seq.mkString(",") //Wondering why a comma is used?  See http://www.w3.org/Protocols/rfc2616/rfc2616-sec4.html#sec4.2
     (key, value)
   }
