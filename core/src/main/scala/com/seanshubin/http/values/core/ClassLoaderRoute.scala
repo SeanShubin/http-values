@@ -1,6 +1,6 @@
 package com.seanshubin.http.values.core
 
-class ClassLoaderGate(name: String, receiver: Receiver, contentTypeByExtension: Map[String, ContentType]) extends Gate(name, receiver) {
+class ClassLoaderRoute(name: String, receiver: Receiver, contentTypeByExtension: Map[String, ContentType]) extends Route(name, receiver) {
   override def accept(request: RequestValue): Boolean = {
     if (request.method == "GET") {
       StringUtil.getExtension(request.uriString) match {

@@ -3,40 +3,40 @@ package com.seanshubin.http.values.core
 import org.scalatest.FunSuite
 
 class DispatchingReceiverTest extends FunSuite {
-  test("no two gates are allowed to have the same name") {
+  test("no two routes are allowed to have the same name") {
     val dummyReceiver: Receiver = null
-    val gate = createGate("gate", dummyReceiver, acceptResult = false)
+    val route = createRoute("route", dummyReceiver, acceptResult = false)
     val exception = intercept[RuntimeException] {
-      new DispatchingReceiver(Seq(gate, gate))
+      new DispatchingReceiver(Seq(route, route))
     }
-    assert(exception.getMessage === "Duplicate gate 'gate'")
+    assert(exception.getMessage === "Duplicate route 'route'")
   }
 
   test("handle conflict") {
     val dummyReceiver: Receiver = null
     val request = RequestValue("uri", "method", Seq(), Map())
-    val gateA = createGate("gate a", dummyReceiver, acceptResult = true)
-    val gateB = createGate("gate b", dummyReceiver, acceptResult = true)
-    val dispatcher = new DispatchingReceiver(Seq(gateA, gateB))
+    val routeA = createRoute("route a", dummyReceiver, acceptResult = true)
+    val routeB = createRoute("route b", dummyReceiver, acceptResult = true)
+    val dispatcher = new DispatchingReceiver(Seq(routeA, routeB))
     val exception = intercept[RuntimeException] {
       dispatcher.receive(request)
     }
-    assert(exception.getMessage === "Multiple receivers matched RequestValue(uri,method,List(),Map()): gate a, gate b")
+    assert(exception.getMessage === "Multiple receivers matched RequestValue(uri,method,List(),Map()): route a, route b")
   }
 
   test("handle missing") {
     val dummyReceiver: Receiver = null
     val request = RequestValue("uri", "method", Seq(), Map())
-    val gateA = createGate("gate a", dummyReceiver, acceptResult = false)
-    val gateB = createGate("gate b", dummyReceiver, acceptResult = false)
-    val dispatcher = new DispatchingReceiver(Seq(gateA, gateB))
+    val routeA = createRoute("route a", dummyReceiver, acceptResult = false)
+    val routeB = createRoute("route b", dummyReceiver, acceptResult = false)
+    val dispatcher = new DispatchingReceiver(Seq(routeA, routeB))
     val exception = intercept[RuntimeException] {
       dispatcher.receive(request)
     }
-    assert(exception.getMessage === "No receivers matched RequestValue(uri,method,List(),Map()): gate a, gate b")
+    assert(exception.getMessage === "No receivers matched RequestValue(uri,method,List(),Map()): route a, route b")
   }
 
-  test("dispatch through proper gate") {
+  test("dispatch through proper route") {
     val dummyReceiver: Receiver = null
     val expectedResponse = ResponseValue(200, Seq(), Map())
     val request = RequestValue("uri", "method", Seq(), Map())
@@ -45,16 +45,16 @@ class DispatchingReceiverTest extends FunSuite {
         expectedResponse
       }
     }
-    val gateA = createGate("gate a", dummyReceiver, acceptResult = false)
-    val gateB = createGate("gate b", stubReceiver, acceptResult = true)
-    val gateC = createGate("gate c", dummyReceiver, acceptResult = false)
-    val dispatcher = new DispatchingReceiver(Seq(gateA, gateB, gateC))
+    val routeA = createRoute("route a", dummyReceiver, acceptResult = false)
+    val routeB = createRoute("route b", stubReceiver, acceptResult = true)
+    val routeC = createRoute("route c", dummyReceiver, acceptResult = false)
+    val dispatcher = new DispatchingReceiver(Seq(routeA, routeB, routeC))
     val actualResponse = dispatcher.receive(request)
     assert(actualResponse === expectedResponse)
   }
 
-  def createGate(name: String, receiver: Receiver, acceptResult: Boolean): Gate = {
-    new Gate(name, receiver) {
+  def createRoute(name: String, receiver: Receiver, acceptResult: Boolean): Route = {
+    new Route(name, receiver) {
       override def accept(request: RequestValue): Boolean = acceptResult
     }
   }
