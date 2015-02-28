@@ -26,3 +26,12 @@ class PrefixReceiver(prefix: String, forwardTo: Receiver) extends Receiver {
     response
   }
 }
+
+object PrefixReceiver {
+  def apply(maybePrefix: Option[String], forwardTo: Receiver): Receiver = {
+    maybePrefix match {
+      case Some(prefix) => new PrefixReceiver(prefix, forwardTo)
+      case None => forwardTo
+    }
+  }
+}
