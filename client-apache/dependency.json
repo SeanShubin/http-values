@@ -6,6 +6,7 @@
       "http-values-client-apache-1.0-SNAPSHOT.jar"
     ]
   ],
+  "scrubGroupingPattern": "com/seanshubin/([^/]+).*",
   "styleSheet": [
     "client-apache",
     "dependency.css"
@@ -35,12 +36,20 @@
   "classLimits": {
     "depth": 11,
     "complexity": 100,
-    "cycleCount": 0
+    "cycleCount": 0,
+    "cycleSize": 0
   },
   "packageLimits": {
     "depth": 4,
     "complexity": 10,
-    "cycleCount": 0
+    "cycleCount": 0,
+    "cycleSize": 0
+  },
+  "groupingLimits": {
+    "depth": 1,
+    "complexity": 0,
+    "cycleCount": 0,
+    "cycleSize": 0
   },
   "failIfAnyLimitExceeded": true
 }
