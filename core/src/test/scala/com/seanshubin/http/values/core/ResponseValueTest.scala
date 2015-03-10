@@ -17,7 +17,7 @@ class ResponseValueTest extends FunSuite with EasyMockSugar {
       httpServletResponse.setStatus(200)
       httpServletResponse.getOutputStream.andReturn(fakeServletOutputStream)
       httpServletResponse.setHeader("header-name", "header-value")
-      httpServletResponse.setHeader("Content-Type", "text/plain; charset=utf-8")
+      httpServletResponse.setHeader("content-type", "text/plain; charset=utf-8")
     }
     whenExecuting(httpServletResponse) {
       ServletUtil.writeValue(responseValue, httpServletResponse)

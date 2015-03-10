@@ -42,7 +42,7 @@ class RequestValueTest extends FunSuite with EasyMockSugar {
           "some text".getBytes("utf-8").toSeq,
           Map(
             "header key" -> "header value",
-            "Content-Type" -> "content/type; charset=utf-8")))
+            "content-type" -> "content/type; charset=utf-8")))
     assert(
       RequestValue.fromBytes(
         "some uri",
@@ -56,7 +56,7 @@ class RequestValueTest extends FunSuite with EasyMockSugar {
           Seq(1, 2, 3),
           Map(
             "header key" -> "header value",
-            "Content-Type" -> "binary/type")))
+            "content-type" -> "binary/type")))
   }
 
   test("character encoding from headers") {

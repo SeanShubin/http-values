@@ -14,6 +14,6 @@ class ClassLoaderReceiverTest extends FunSuite {
     assert(response === ResponseValue(
       200,
       "Hello, world!".getBytes("utf-8"),
-      Map("Content-Type" -> "text/plain; charset=utf-8")))
+      Map("content-type" -> "text/plain; charset=utf-8")))
   }
 }
