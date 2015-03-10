@@ -1,12 +1,13 @@
 package com.seanshubin.http.values.core
 
-case class Headers(headers: Map[String, String]) {
+case class Headers(caseSensitive: Map[String, String]) {
+  private val headers = for { (key, value) <- caseSensitive} yield (key.toLowerCase, value)
   def maybeContentType: Option[ContentType] = {
-    headers.get("Content-Type").map(ContentType.fromString)
+    headers.get("content-type").map(ContentType.fromString)
   }
 
   def setContentType(contentType: ContentType): Map[String, String] = {
-    headers + ("Content-Type" -> contentType.toString)
+    headers + ("content-type" -> contentType.toString)
   }
 
   def effectiveCharset: String = {
@@ -21,5 +22,5 @@ object Headers {
 
   import scala.language.implicitConversions
 
-  implicit def toHeaders(headers: Map[String, String]) = new Headers(headers)
+  implicit def toHeaders(headers: Map[String, String]):Headers = new Headers(headers)
 }
