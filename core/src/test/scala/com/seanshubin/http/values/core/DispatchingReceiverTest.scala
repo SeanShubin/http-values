@@ -14,32 +14,32 @@ class DispatchingReceiverTest extends FunSuite {
 
   test("handle conflict") {
     val dummyReceiver: Receiver = null
-    val request = RequestValue("uri", "method", Seq(), Map())
+    val request = RequestValue("uri", "method", Seq(), Seq())
     val routeA = createRoute("route a", dummyReceiver, acceptResult = true)
     val routeB = createRoute("route b", dummyReceiver, acceptResult = true)
     val dispatcher = new DispatchingReceiver(Seq(routeA, routeB))
     val exception = intercept[RuntimeException] {
       dispatcher.receive(request)
     }
-    assert(exception.getMessage === "Multiple receivers matched RequestValue(uri,method,List(),Map()): route a, route b")
+    assert(exception.getMessage === "Multiple receivers matched RequestValue(uri,method,List(),List()): route a, route b")
   }
 
   test("handle missing") {
     val dummyReceiver: Receiver = null
-    val request = RequestValue("uri", "method", Seq(), Map())
+    val request = RequestValue("uri", "method", Seq(), Seq())
     val routeA = createRoute("route a", dummyReceiver, acceptResult = false)
     val routeB = createRoute("route b", dummyReceiver, acceptResult = false)
     val dispatcher = new DispatchingReceiver(Seq(routeA, routeB))
     val exception = intercept[RuntimeException] {
       dispatcher.receive(request)
     }
-    assert(exception.getMessage === "No receivers matched RequestValue(uri,method,List(),Map()): route a, route b")
+    assert(exception.getMessage === "No receivers matched RequestValue(uri,method,List(),List()): route a, route b")
   }
 
   test("dispatch through proper route") {
     val dummyReceiver: Receiver = null
-    val expectedResponse = ResponseValue(200, Seq(), Map())
-    val request = RequestValue("uri", "method", Seq(), Map())
+    val expectedResponse = ResponseValue(200, Seq(), Seq())
+    val request = RequestValue("uri", "method", Seq(), Seq())
     val stubReceiver = new Receiver {
       override def receive(request: RequestValue): ResponseValue = {
         expectedResponse

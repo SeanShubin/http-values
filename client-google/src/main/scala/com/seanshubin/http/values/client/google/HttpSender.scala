@@ -2,7 +2,7 @@ package com.seanshubin.http.values.client.google
 
 import com.google.api.client.http._
 import com.google.api.client.http.javanet.NetHttpTransport
-import com.seanshubin.http.values.core.{IoUtil, RequestValue, ResponseValue, Sender}
+import com.seanshubin.http.values.core._
 
 import scala.collection.JavaConversions
 
@@ -15,17 +15,18 @@ class HttpSender extends Sender {
     val bytes = IoUtil.inputStreamToBytes(inputStream)
     val javaMapHeaders: java.util.Map[String, AnyRef] = httpResponse.getHeaders
     val scalaMapHeaders: Map[String, AnyRef] = JavaConversions.mapAsScalaMap(javaMapHeaders).toSeq.toMap
-    val headers: Map[String, String] = scalaMapHeaders.map(headerToEntry)
-    val responseValue = ResponseValue(statusCode, bytes, headers)
+    val headerEntries: Map[String, String] = scalaMapHeaders.flatMap(headerToEntries)
+    val headers = Headers.fromEntries(headerEntries.toSeq)
+    val responseValue = ResponseValue(statusCode, bytes, headers.entries)
     responseValue
   }
 
-  def headerToEntry(entry: (String, AnyRef)): (String, String) = {
+  def headerToEntries(entry: (String, AnyRef)): Seq[(String, String)] = {
     val (key, listAsObject) = entry
     val javaList = listAsObject.asInstanceOf[java.util.List[_]]
     val seq: Seq[_] = JavaConversions.asScalaBuffer(javaList)
-    val value = seq.mkString(",") //Wondering why a comma is used?  See http://www.w3.org/Protocols/rfc2616/rfc2616-sec4.html#sec4.2
-    (key, value)
+    val entries: Seq[(String, String)] = seq.map(value => (key, if (value == null) "" else value.toString))
+    entries
   }
 }
 
@@ -44,7 +45,6 @@ object HttpSender {
   def toGenericUrl(request: RequestValue): GenericUrl = new GenericUrl(request.uri)
 
   def toHttpContent(request: RequestValue): HttpContent = {
-    import com.seanshubin.http.values.core.Headers.toHeaders
-    new ByteArrayContent(request.headers.maybeContentType.get.toString, request.body.toArray)
+    new ByteArrayContent(Headers.fromEntries(request.headers).maybeContentType.get.toString, request.body.toArray)
   }
 }

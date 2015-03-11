@@ -6,8 +6,8 @@ class EchoReceiver extends Receiver {
     val charset: String = "utf-8"
     val body = request.toMultipleLineString.mkString("\n").getBytes(charset)
     val contentType = ContentType("text/plain", Some(charset))
-    val headers = Headers(Map("Access-Control-Allow-Origin" -> "*")).setContentType(contentType)
-    val responseValue = ResponseValue(statusCode, body, headers)
+    val headers = Headers(Seq("Access-Control-Allow-Origin" -> "*")).setContentType(contentType)
+    val responseValue = ResponseValue(statusCode, body, headers.entries)
     responseValue
   }
 }

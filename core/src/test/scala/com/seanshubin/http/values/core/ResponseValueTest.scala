@@ -10,7 +10,7 @@ import org.scalatest.mock.EasyMockSugar
 class ResponseValueTest extends FunSuite with EasyMockSugar {
   test("serialize to servlet response") {
     val httpServletResponse = mock[HttpServletResponse]
-    val responseValue = ResponseValue.fromText(200, ContentType("text/plain", Some("utf-8")), "Hello, world!", Map("header-name" -> "header-value"))
+    val responseValue = ResponseValue.fromText(200, ContentType("text/plain", Some("utf-8")), "Hello, world!", Seq("header-name" -> "header-value"))
     val backingOutputStream = new ByteArrayOutputStream()
     val fakeServletOutputStream = new StubServletOutputStream(backingOutputStream)
     expecting {
@@ -26,7 +26,7 @@ class ResponseValueTest extends FunSuite with EasyMockSugar {
   }
 
   test("text response value as text") {
-    val responseValue = ResponseValue(200, "Hello, world!".getBytes(StandardCharsets.UTF_8), Map("Content-Type" -> "text/plain; charset=utf-8"))
+    val responseValue = ResponseValue(200, "Hello, world!".getBytes(StandardCharsets.UTF_8), Seq("Content-Type" -> "text/plain; charset=utf-8"))
     val actual = responseValue.toMultipleLineString
     val expected = Seq(
       "status code = 200",
@@ -39,7 +39,7 @@ class ResponseValueTest extends FunSuite with EasyMockSugar {
   }
 
   test("binary response value as text") {
-    val responseValue = ResponseValue(200, "Hello, world!".getBytes(StandardCharsets.UTF_8), Map())
+    val responseValue = ResponseValue(200, "Hello, world!".getBytes(StandardCharsets.UTF_8), Seq())
     val actual = responseValue.toMultipleLineString
     val expected = Seq(
       "status code = 200",

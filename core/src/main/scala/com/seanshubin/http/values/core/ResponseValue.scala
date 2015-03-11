@@ -1,8 +1,6 @@
 package com.seanshubin.http.values.core
 
-case class ResponseValue(statusCode: Int, body: Seq[Byte], headers: Map[String, String]) {
-
-  import com.seanshubin.http.values.core.Headers._
+case class ResponseValue(statusCode: Int, body: Seq[Byte], headers: Seq[(String, String)]) {
 
   def text: String = {
     maybeCharset match {
@@ -13,7 +11,7 @@ case class ResponseValue(statusCode: Int, body: Seq[Byte], headers: Map[String, 
 
   def maybeCharset: Option[String] = maybeContentType.flatMap(_.maybeCharset)
 
-  def maybeContentType: Option[ContentType] = headers.maybeContentType
+  def maybeContentType: Option[ContentType] = Headers.fromEntries(headers).maybeContentType
 
   def toMultipleLineString: Seq[String] = {
     Seq(
@@ -52,14 +50,14 @@ case class ResponseValue(statusCode: Int, body: Seq[Byte], headers: Map[String, 
 object ResponseValue {
   def isSuccess(statusCode: Int): Boolean = statusCode >= 200 && statusCode <= 399
 
-  def fromText(statusCode: Int, contentType: ContentType, text: String, headers: Map[String, String]) = {
+  def fromText(statusCode: Int, contentType: ContentType, text: String, headerEntries: Seq[(String, String)]) = {
     val body = text.getBytes(contentType.charset)
-    val newHeaders = Headers(headers).setContentType(contentType)
-    new ResponseValue(statusCode, body, newHeaders)
+    val newHeaders = Headers.fromEntries(headerEntries).setContentType(contentType)
+    new ResponseValue(statusCode, body, newHeaders.entries)
   }
 
-  def fromBytes(statusCode: Int, contentType: ContentType, bytes: Seq[Byte], headers: Map[String, String]) = {
-    val newHeaders = Headers(headers).setContentType(contentType)
-    new ResponseValue(statusCode, bytes, newHeaders)
+  def fromBytes(statusCode: Int, contentType: ContentType, bytes: Seq[Byte], headerEntries: Seq[(String, String)]) = {
+    val newHeaders = Headers.fromEntries(headerEntries).setContentType(contentType)
+    new ResponseValue(statusCode, bytes, newHeaders.entries)
   }
 }

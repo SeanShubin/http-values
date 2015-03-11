@@ -26,8 +26,8 @@ object ServletUtil {
     } yield {
       (headerName, request.getHeader(headerName))
     }
-    val headers = headerEntries.toMap
-    val value = RequestValue(uriString, method, body, headers)
+    val headers = Headers.fromEntries(headerEntries.toSeq)
+    val value = RequestValue(uriString, method, body, headers.entries)
     value
   }
 }

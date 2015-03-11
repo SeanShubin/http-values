@@ -2,7 +2,7 @@ package com.seanshubin.http.values.core
 
 import java.net.URI
 
-case class RequestValue(uriString: String, method: String, body: Seq[Byte], headers: Map[String, String]) {
+case class RequestValue(uriString: String, method: String, body: Seq[Byte], headers: Seq[(String, String)]) {
   def uri: URI = new URI(uriString)
 
   def text: String = {
@@ -43,14 +43,14 @@ case class RequestValue(uriString: String, method: String, body: Seq[Byte], head
 }
 
 object RequestValue {
-  def fromText(uriString: String, method: String, contentType: ContentType, text: String, headers: Map[String, String]) = {
+  def fromText(uriString: String, method: String, contentType: ContentType, text: String, headerEntries: Seq[(String, String)]) = {
     val body = text.getBytes(contentType.charset)
-    val newHeaders = Headers(headers).setContentType(contentType)
-    new RequestValue(uriString, method, body, newHeaders)
+    val newHeaders = Headers(headerEntries).setContentType(contentType)
+    new RequestValue(uriString, method, body, newHeaders.entries)
   }
 
-  def fromBytes(uriString: String, method: String, contentType: ContentType, bytes: Seq[Byte], headers: Map[String, String]) = {
-    val newHeaders = Headers(headers).setContentType(contentType)
-    new RequestValue(uriString, method, bytes, newHeaders)
+  def fromBytes(uriString: String, method: String, contentType: ContentType, bytes: Seq[Byte], headerEntries: Seq[(String, String)]) = {
+    val newHeaders = Headers(headerEntries).setContentType(contentType)
+    new RequestValue(uriString, method, bytes, newHeaders.entries)
   }
 }

@@ -35,12 +35,12 @@ class RequestValueTest extends FunSuite with EasyMockSugar {
         "some method",
         ContentType("content/type", Some("utf-8")),
         "some text",
-        Map("header key" -> "header value")) ===
+        Seq("header key" -> "header value")) ===
         RequestValue(
           "some uri",
           "some method",
           "some text".getBytes("utf-8").toSeq,
-          Map(
+          Seq(
             "header key" -> "header value",
             "content-type" -> "content/type; charset=utf-8")))
     assert(
@@ -49,27 +49,27 @@ class RequestValueTest extends FunSuite with EasyMockSugar {
         "some method",
         ContentType("binary/type", None),
         Seq(1, 2, 3),
-        Map("header key" -> "header value")) ===
+        Seq("header key" -> "header value")) ===
         RequestValue(
           "some uri",
           "some method",
           Seq(1, 2, 3),
-          Map(
+          Seq(
             "header key" -> "header value",
             "content-type" -> "binary/type")))
   }
 
   test("character encoding from headers") {
-    val noContentType = Map("Some-Header" -> "text/html; charset=utf-8")
-    val notSpecified = Map("Content-Type" -> "text/html")
-    val specified = Map("Content-Type" -> "text/html; charset=utf-8")
-    assert(Headers(notSpecified).effectiveCharset === "ISO-8859-1")
-    assert(Headers(specified).effectiveCharset === "utf-8")
-    assert(Headers(noContentType).effectiveCharset === "ISO-8859-1")
+    val noContentType = Seq("Some-Header" -> "text/html; charset=utf-8")
+    val notSpecified = Seq("Content-Type" -> "text/html")
+    val specified = Seq("Content-Type" -> "text/html; charset=utf-8")
+    assert(Headers.fromEntries(notSpecified).effectiveCharset === "ISO-8859-1")
+    assert(Headers.fromEntries(specified).effectiveCharset === "utf-8")
+    assert(Headers.fromEntries(noContentType).effectiveCharset === "ISO-8859-1")
   }
 
   test("can't get text without charset") {
-    val headers = Map("Content-Type" -> "content/type")
+    val headers = Seq("Content-Type" -> "content/type")
     val requestValue = new RequestValue("some uri", "some method", "hello".getBytes("utf-8"), headers)
     val exception = intercept[RuntimeException] {
       requestValue.text

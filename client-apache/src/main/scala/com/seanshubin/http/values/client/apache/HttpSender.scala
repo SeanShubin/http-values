@@ -1,6 +1,6 @@
 package com.seanshubin.http.values.client.apache
 
-import com.seanshubin.http.values.core.{IoUtil, RequestValue, ResponseValue, Sender}
+import com.seanshubin.http.values.core._
 import org.apache.http.Header
 import org.apache.http.client.methods._
 import org.apache.http.impl.client.HttpClients
@@ -14,8 +14,8 @@ class HttpSender extends Sender {
     val inputStream = httpResponse.getEntity.getContent
     val bytes = IoUtil.inputStreamToBytes(inputStream)
     val headerEntries = httpResponse.getAllHeaders.map(headerToEntry)
-    val headers = headerEntries.toMap
-    val responseValue = ResponseValue(statusCode, bytes, headers)
+    val headers = Headers.fromEntries(headerEntries)
+    val responseValue = ResponseValue(statusCode, bytes, headers.entries)
     responseValue
   }
 

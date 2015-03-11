@@ -20,8 +20,8 @@ class ClassLoaderReceiver(classLoader: ClassLoader,
             case Some(contentType) =>
               val statusCode = 200
               val body = IoUtil.inputStreamToBytes(inputStream)
-              val headers = new Headers(Map()).setContentType(contentType)
-              val response = ResponseValue(statusCode, body, headers)
+              val headers = Headers.Empty.setContentType(contentType)
+              val response = ResponseValue(statusCode, body, headers.entries)
               response
             case None =>
               throw new RuntimeException(s"Unable to find content type for extension $extension")

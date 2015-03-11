@@ -16,11 +16,12 @@ class PrefixReceiver(prefix: String, forwardTo: Receiver) extends Receiver {
   }
 
   private def adjustLocation(rawResponse: ResponseValue): ResponseValue = {
-    val response = rawResponse.headers.get("Location") match {
+    val headers = Headers.fromEntries(rawResponse.headers)
+    val response = headers.get("Location") match {
       case Some(location) =>
         val newLocation = prefix + location
-        val newHeaders: Map[String, String] = rawResponse.headers + ("Location" -> newLocation)
-        rawResponse.copy(headers = newHeaders)
+        val newHeaders: Headers = headers.update("Location", newLocation)
+        rawResponse.copy(headers = newHeaders.entries)
       case None => rawResponse
     }
     response
