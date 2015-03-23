@@ -9,6 +9,7 @@ import scala.collection.JavaConversions
 class HttpSender extends Sender {
   override def send(request: RequestValue): ResponseValue = {
     val httpRequest: HttpRequest = HttpSender.requestMap(request.method.toLowerCase)(request)
+    httpRequest.setThrowExceptionOnExecuteError(false)
     val httpResponse: HttpResponse = httpRequest.execute()
     val statusCode = httpResponse.getStatusCode
     val inputStream = httpResponse.getContent
