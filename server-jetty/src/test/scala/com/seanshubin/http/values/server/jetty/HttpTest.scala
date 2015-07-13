@@ -52,7 +52,7 @@ class HttpTest extends FunSuite {
     assert(requestHeaders.contains("Accept-Encoding"))
     assert(actualResponse.body === "Hello, world!".getBytes("utf-8").toSeq)
     assert(actualResponse.statusCode === 200)
-    assert(responseHeaders.get("content-type") === Some("text/plain; charset=UTF-8"))
+    assert(responseHeaders.get("content-type") === Some("text/plain;charset=utf-8"))
     assert(responseHeaders.get("content-length") === Some("13"))
   }
 }
