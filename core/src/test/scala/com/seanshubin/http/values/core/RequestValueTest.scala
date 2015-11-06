@@ -13,7 +13,12 @@ class RequestValueTest extends FunSuite with EasyMockSugar {
     val httpServletRequest = mock[HttpServletRequest]
     expecting {
       httpServletRequest.getMethod.andReturn("the-method")
-      httpServletRequest.getRequestURI.andReturn("foo://user@example.com:8042/over/there?name=ferret#nose")
+      httpServletRequest.getScheme.andReturn("foo")
+      httpServletRequest.getRemoteUser.andReturn("user")
+      httpServletRequest.getRemoteHost.andReturn("example.com")
+      httpServletRequest.getRemotePort.andReturn(8042)
+      httpServletRequest.getRequestURI.andReturn("/over/there")
+      httpServletRequest.getQueryString.andReturn("name=ferret")
       httpServletRequest.getInputStream.andReturn(StubServletInputStream.fromText("Hello, world!", "utf-8"))
       httpServletRequest.getHeaderNames.andReturn(JavaConversions.asJavaEnumeration(Seq("Content-Type").iterator))
       httpServletRequest.getHeader("Content-Type").andReturn("text/plain; charset=utf-8")
@@ -21,8 +26,8 @@ class RequestValueTest extends FunSuite with EasyMockSugar {
     whenExecuting(httpServletRequest) {
       val requestValue = ServletUtil.readValue(httpServletRequest)
       assert(requestValue.method === "the-method")
-      assert(requestValue.uriString === "foo://user@example.com:8042/over/there?name=ferret#nose")
-      assert(requestValue.uri === new URI("foo://user@example.com:8042/over/there?name=ferret#nose"))
+      assert(requestValue.uriString === "foo://user@example.com:8042/over/there?name=ferret")
+      assert(requestValue.uri === new URI("foo://user@example.com:8042/over/there?name=ferret"))
       assert(requestValue.text === "Hello, world!")
       assert(requestValue.maybeContentType === Some(ContentType("text/plain", Some("utf-8"))))
     }
