@@ -1,5 +1,6 @@
 package com.seanshubin.http.values.core
 
+import java.net.URI
 import javax.servlet.http.{HttpServletRequest, HttpServletResponse}
 
 import scala.collection.JavaConversions
@@ -17,7 +18,15 @@ object ServletUtil {
   }
 
   def readValue(request: HttpServletRequest): RequestValue = {
-    val uriString = request.getRequestURI
+    val path = request.getRequestURI
+    val query = request.getQueryString
+    val host = request.getRemoteHost
+    val port = request.getRemotePort
+    val userInfo = request.getRemoteUser
+    val scheme = request.getScheme
+    val fragment = null
+    val uri = new URI(scheme, userInfo, host, port, path, query, fragment)
+    val uriString = uri.toString
     val method = request.getMethod
     val body = IoUtil.inputStreamToBytes(request.getInputStream)
     val headerNames = JavaConversions.enumerationAsScalaIterator(request.getHeaderNames)

@@ -1,5 +1,7 @@
 package com.seanshubin.http.values.server.jetty
 
+import java.net.URI
+
 import com.seanshubin.http.values.client.apache.{HttpSender => ApacheSender}
 import com.seanshubin.http.values.client.google.{HttpSender => GoogleSender}
 import com.seanshubin.http.values.core._
@@ -33,18 +35,21 @@ class HttpTest extends FunSuite {
     server.setHandler(handler)
     server.start()
     val sentRequest: RequestValue = RequestValue(
-      uriString = s"http://localhost:$port/greeting",
+      uriString = s"http://localhost:$port/greeting?foo=bar#fragment",
       method = "get",
       body = Seq(),
       headers = Seq())
     val actualResponse = sender.send(sentRequest).withLowerCaseHeaderKeys
-    println(actualResponse)
     server.stop()
     val actualRequest = requests(0)
     val requestHeaders = Headers.fromEntries(actualRequest.headers)
     val responseHeaders = Headers.fromEntries(actualResponse.headers)
+    val actualUri = new URI(actualRequest.uriString)
     assert(requests.size === 1)
-    assert(actualRequest.uriString === "/greeting")
+    assert(actualUri.getScheme === "http")
+    assert(actualUri.getHost === "127.0.0.1")
+    assert(actualUri.getPath === "/greeting")
+    assert(actualUri.getQuery === "foo=bar")
     assert(actualRequest.method === "GET")
     assert(actualRequest.body === Seq())
     assert(requestHeaders.get("Connection") === Some("keep-alive"))
