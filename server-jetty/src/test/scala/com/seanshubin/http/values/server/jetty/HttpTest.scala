@@ -1,7 +1,5 @@
 package com.seanshubin.http.values.server.jetty
 
-import java.net.URI
-
 import com.seanshubin.http.values.client.apache.{HttpSender => ApacheSender}
 import com.seanshubin.http.values.client.google.{HttpSender => GoogleSender}
 import com.seanshubin.http.values.core._
@@ -44,7 +42,7 @@ class HttpTest extends FunSuite {
     val actualRequest = requests(0)
     val requestHeaders = Headers.fromEntries(actualRequest.headers)
     val responseHeaders = Headers.fromEntries(actualResponse.headers)
-    val actualUri = new URI(actualRequest.uriString)
+    val actualUri = actualRequest.uri.toUri
     assert(requests.size === 1)
     assert(actualUri.getScheme === "http")
     assert(actualUri.getHost === "127.0.0.1")

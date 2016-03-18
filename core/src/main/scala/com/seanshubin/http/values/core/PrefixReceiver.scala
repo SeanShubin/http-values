@@ -2,14 +2,15 @@ package com.seanshubin.http.values.core
 
 class PrefixReceiver(prefix: String, forwardTo: Receiver) extends Receiver {
   override def receive(request: RequestValue): ResponseValue = {
-    val rawResponse: ResponseValue = if (request.uriString.startsWith(prefix + "/")) {
-      forwardTo.receive(request.copy(uriString = request.uriString.substring(prefix.size)))
-    } else if (request.uriString == prefix) {
-      forwardTo.receive(request.copy(uriString = "/"))
-    } else if (request.uriString == "/favicon.ico") {
+    val path = request.uri.path
+    val rawResponse: ResponseValue = if (path.startsWith(prefix + "/")) {
+      forwardTo.receive(request.copy(uri = request.uri.copy(path = path.substring(prefix.length))))
+    } else if (path == prefix) {
+      forwardTo.receive(request.copy(uri = request.uri.copy(path = "/")))
+    } else if (path == "/favicon.ico") {
       forwardTo.receive(request)
     } else {
-      throw new RuntimeException(s"Expected uri to start with '$prefix', got '${request.uriString}'")
+      throw new RuntimeException(s"Expected uri to start with '$prefix', got '$path'")
     }
     val response = adjustLocation(rawResponse)
     response
@@ -19,8 +20,9 @@ class PrefixReceiver(prefix: String, forwardTo: Receiver) extends Receiver {
     val headers = Headers.fromEntries(rawResponse.headers)
     val response = headers.get("Location") match {
       case Some(location) =>
-        val newLocation = prefix + location
-        val newHeaders: Headers = headers.update("Location", newLocation)
+        val locationUri = UriValue.fromString(location)
+        val newLocationUri = locationUri.copy(path = prefix + locationUri.path)
+        val newHeaders: Headers = headers.update("Location", newLocationUri.toString)
         rawResponse.copy(headers = newHeaders.entries)
       case None => rawResponse
     }

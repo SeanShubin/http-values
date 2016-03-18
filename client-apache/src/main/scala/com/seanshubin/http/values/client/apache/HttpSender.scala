@@ -26,11 +26,11 @@ class HttpSender extends Sender {
 
 object HttpSender {
   val requestMap: Map[String, RequestValue => HttpUriRequest] = Map(
-    "get" -> ((request: RequestValue) => new HttpGet(request.uri)),
-    "delete" -> ((request: RequestValue) => new HttpDelete(request.uri)),
-    "post" -> ((request: RequestValue) => withEntity(new HttpPost(request.uri), request)),
-    "put" -> ((request: RequestValue) => withEntity(new HttpPut(request.uri), request)),
-    "patch" -> ((request: RequestValue) => withEntity(new HttpPatch(request.uri), request))
+    "get" -> ((request: RequestValue) => new HttpGet(request.uri.toUri)),
+    "delete" -> ((request: RequestValue) => new HttpDelete(request.uri.toUri)),
+    "post" -> ((request: RequestValue) => withEntity(new HttpPost(request.uri.toUri), request)),
+    "put" -> ((request: RequestValue) => withEntity(new HttpPut(request.uri.toUri), request)),
+    "patch" -> ((request: RequestValue) => withEntity(new HttpPatch(request.uri.toUri), request))
   )
 
   def withEntity(request: HttpEntityEnclosingRequestBase, requestValue: RequestValue): HttpUriRequest = {

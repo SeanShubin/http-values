@@ -7,12 +7,12 @@ class ClassLoaderReceiver(classLoader: ClassLoader,
                           contentTypeByExtension: Map[String, ContentType],
                           overridePath: Option[String]) extends Receiver {
   override def receive(request: RequestValue): ResponseValue = {
-    val resourceName = prefix + request.uriString
+    val resourceName = prefix + request.uri.path
     val inputStream = createInputStreamFor(resourceName)
     if (inputStream == null) {
       throw new RuntimeException(s"Unable to find $resourceName on the class path")
     } else {
-      val maybeExtension = StringUtil.getExtension(request.uriString)
+      val maybeExtension = StringUtil.getExtension(request.uri.path)
       maybeExtension match {
         case Some(extension) =>
           val maybeContentType = contentTypeByExtension.get(extension)
@@ -27,7 +27,7 @@ class ClassLoaderReceiver(classLoader: ClassLoader,
               throw new RuntimeException(s"Unable to find content type for extension $extension")
           }
         case None =>
-          throw new RuntimeException(s"Unable to find extension for ${request.uriString} (needed to compute content type)")
+          throw new RuntimeException(s"Unable to find extension for ${request.uri.path} (needed to compute content type)")
       }
     }
   }

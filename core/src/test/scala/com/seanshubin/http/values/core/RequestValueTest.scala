@@ -26,8 +26,8 @@ class RequestValueTest extends FunSuite with EasyMockSugar {
     whenExecuting(httpServletRequest) {
       val requestValue = ServletUtil.readValue(httpServletRequest)
       assert(requestValue.method === "the-method")
-      assert(requestValue.uriString === "foo://user@example.com:8042/over/there?name=ferret")
-      assert(requestValue.uri === new URI("foo://user@example.com:8042/over/there?name=ferret"))
+      assert(requestValue.uri.toString === "foo://user@example.com:8042/over/there?name=ferret")
+      assert(requestValue.uri.toUri === new URI("foo://user@example.com:8042/over/there?name=ferret"))
       assert(requestValue.text === "Hello, world!")
       assert(requestValue.maybeContentType === Some(ContentType("text/plain", Some("utf-8"))))
     }
@@ -36,13 +36,13 @@ class RequestValueTest extends FunSuite with EasyMockSugar {
   test("different body types") {
     assert(
       RequestValue.fromText(
-        "some uri",
+        "some-uri",
         "some method",
         ContentType("content/type", Some("utf-8")),
         "some text",
         Seq("header key" -> "header value")) ===
         RequestValue(
-          "some uri",
+          "some-uri",
           "some method",
           "some text".getBytes("utf-8").toSeq,
           Seq(
@@ -50,15 +50,15 @@ class RequestValueTest extends FunSuite with EasyMockSugar {
             "content-type" -> "content/type; charset=utf-8")))
     assert(
       RequestValue.fromBytes(
-        "some uri",
+        "some-uri",
         "some method",
         ContentType("binary/type", None),
-        Seq(1, 2, 3),
+        Seq[Byte](1, 2, 3),
         Seq("header key" -> "header value")) ===
         RequestValue(
-          "some uri",
+          "some-uri",
           "some method",
-          Seq(1, 2, 3),
+          Seq[Byte](1, 2, 3),
           Seq(
             "header key" -> "header value",
             "content-type" -> "binary/type")))
@@ -75,7 +75,7 @@ class RequestValueTest extends FunSuite with EasyMockSugar {
 
   test("can't get text without charset") {
     val headers = Seq("Content-Type" -> "content/type")
-    val requestValue = new RequestValue("some uri", "some method", "hello".getBytes("utf-8"), headers)
+    val requestValue = RequestValue("some-uri", "some method", "hello".getBytes("utf-8"), headers)
     val exception = intercept[RuntimeException] {
       requestValue.text
     }

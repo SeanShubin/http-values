@@ -1,6 +1,5 @@
 package com.seanshubin.http.values.core
 
-import java.net.URI
 import javax.servlet.http.{HttpServletRequest, HttpServletResponse}
 
 import scala.collection.JavaConversions
@@ -25,8 +24,7 @@ object ServletUtil {
     val userInfo = request.getRemoteUser
     val scheme = request.getScheme
     val fragment = null
-    val uri = new URI(scheme, userInfo, host, port, path, query, fragment)
-    val uriString = uri.toString
+    val uri = new UriValue(scheme, userInfo, host, port, path, query, fragment)
     val method = request.getMethod
     val body = IoUtil.inputStreamToBytes(request.getInputStream)
     val headerNames = JavaConversions.enumerationAsScalaIterator(request.getHeaderNames)
@@ -36,7 +34,7 @@ object ServletUtil {
       (headerName, request.getHeader(headerName))
     }
     val headers = Headers.fromEntries(headerEntries.toSeq)
-    val value = RequestValue(uriString, method, body, headers.entries)
+    val value = RequestValue(uri, method, body, headers.entries)
     value
   }
 }

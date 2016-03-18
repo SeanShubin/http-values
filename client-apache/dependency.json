@@ -12,12 +12,16 @@
     "dependency.css"
   ],
   "relevantDependencyPattern": {
-    "includeRegex": ["com/seanshubin/http/values/.*"],
+    "includeRegex": [
+      "com/seanshubin/http/values/.*"
+    ],
     "excludeRegex": []
   },
   "trimRegex": "^com/seanshubin/http/values/",
   "classFileNamePattern": {
-    "includeRegex": [".*\\.class"],
+    "includeRegex": [
+      ".*\\.class"
+    ],
     "excludeRegex": []
   },
   "zipFileNamePattern": {

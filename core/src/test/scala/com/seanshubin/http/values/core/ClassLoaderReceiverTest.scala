@@ -8,7 +8,7 @@ class ClassLoaderReceiverTest extends FunSuite {
     val prefix = "load-from-classpath"
     val contentByExtension = Map(".txt" -> ContentType("text/plain", Some("utf-8")))
     val receiver: Receiver = new ClassLoaderReceiver(classLoader, prefix, contentByExtension, None)
-    val request = RequestValue("/hello.txt", "get", Seq(), Seq())
+    val request = RequestValue(UriValue.fromString("/hello.txt"), "get", Seq(), Seq())
     val response = receiver.receive(request)
     assert(response.text === "Hello, world!")
     assert(response === ResponseValue(

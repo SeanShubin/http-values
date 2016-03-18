@@ -43,7 +43,7 @@ object HttpSender {
     "patch" -> ((request: RequestValue) => factory.buildPatchRequest(toGenericUrl(request), toHttpContent(request)))
   )
 
-  def toGenericUrl(request: RequestValue): GenericUrl = new GenericUrl(request.uri)
+  def toGenericUrl(request: RequestValue): GenericUrl = new GenericUrl(request.uri.toUri)
 
   def toHttpContent(request: RequestValue): HttpContent = {
     new ByteArrayContent(Headers.fromEntries(request.headers).maybeContentType.get.toString, request.body.toArray)
