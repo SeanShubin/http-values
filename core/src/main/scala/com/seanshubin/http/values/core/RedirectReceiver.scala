@@ -5,7 +5,7 @@ class RedirectReceiver(redirectFunction: String => Option[String]) extends Recei
     redirectFunction(request.uri.path) match {
       case Some(newPath) =>
         val statusCode = 301
-        val headers = Seq("Location" -> request.uri.copy(path = newPath).toString)
+        val headers = Seq("Location" -> newPath)
         val body = Seq()
         val response = ResponseValue(statusCode, body, headers)
         response
