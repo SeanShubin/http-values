@@ -1,0 +1,17 @@
+{
+  reportDir generated/detangled
+  searchPaths
+  [
+    server-jetty/target/http-values-server-jetty-1.0-SNAPSHOT.jar
+  ]
+  level 2
+  startsWith
+  {
+    include []
+    exclude []
+    drop []
+  }
+  ignoreFiles []
+  canFailBuild false
+  allowedInCycle []
+}
