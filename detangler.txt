@@ -2,16 +2,16 @@
   reportDir generated/detangled
   searchPaths
   [
-    server-jetty/target/http-values-server-jetty-1.0-SNAPSHOT.jar
+    core/target/http-values-core-1.0-SNAPSHOT.jar
   ]
-  level 2
+  level 1
   startsWith
   {
-    include []
+    include [[com seanshubin http values core]]
     exclude []
-    drop []
+    drop [[com seanshubin http values core]]
   }
   ignoreFiles []
-  canFailBuild false
+  canFailBuild true
   allowedInCycle []
 }
