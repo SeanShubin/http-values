@@ -14,26 +14,28 @@ class DispatchingReceiverTest extends FunSuite {
 
   test("handle conflict") {
     val dummyReceiver: Receiver = null
-    val request = RequestValue("uri", "method", Seq(), Seq())
+    val request = RequestValue("http://uri", "method", Seq(), Seq())
     val routeA = createRoute("route a", dummyReceiver, acceptResult = true)
     val routeB = createRoute("route b", dummyReceiver, acceptResult = true)
     val dispatcher = new DispatchingReceiver(Seq(routeA, routeB))
     val exception = intercept[RuntimeException] {
       dispatcher.receive(request)
     }
-    assert(exception.getMessage === "Multiple receivers matched RequestValue(uri,method,List(),List()): route a, route b")
+    val actual = exception.getMessage
+    val expected = "Multiple receivers matched RequestValue(http://uri,method,List(),List()): route a, route b"
+    assert(actual === expected)
   }
 
   test("handle missing") {
     val dummyReceiver: Receiver = null
-    val request = RequestValue("uri", "method", Seq(), Seq())
+    val request = RequestValue("http://uri", "method", Seq(), Seq())
     val routeA = createRoute("route a", dummyReceiver, acceptResult = false)
     val routeB = createRoute("route b", dummyReceiver, acceptResult = false)
     val dispatcher = new DispatchingReceiver(Seq(routeA, routeB))
     val exception = intercept[RuntimeException] {
       dispatcher.receive(request)
     }
-    assert(exception.getMessage === "No receivers matched RequestValue(uri,method,List(),List()): route a, route b")
+    assert(exception.getMessage === "No receivers matched RequestValue(http://uri,method,List(),List()): route a, route b")
   }
 
   test("dispatch through proper route") {

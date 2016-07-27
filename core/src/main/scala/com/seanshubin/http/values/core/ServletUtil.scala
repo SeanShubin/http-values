@@ -24,7 +24,8 @@ object ServletUtil {
     val userInfo = request.getRemoteUser
     val scheme = request.getScheme
     val fragment = null
-    val uri = new UriValue(scheme, userInfo, host, port, path, query, fragment)
+    val queryValue = QueryValue.fromString(query)
+    val uri = new UriValue(scheme, userInfo, host, port, path, queryValue, fragment)
     val method = request.getMethod
     val body = IoUtil.inputStreamToBytes(request.getInputStream)
     val headerNames = JavaConversions.enumerationAsScalaIterator(request.getHeaderNames)
