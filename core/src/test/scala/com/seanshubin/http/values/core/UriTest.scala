@@ -66,4 +66,26 @@ class UriTest extends FunSuite {
     assert(uri.toString === "/over/there")
     assert(uri.toASCIIString === "/over/there")
   }
+
+  test("uri encoded forward slashes") {
+    //see http://tools.ietf.org/html/rfc3986
+    val uri: URI = new URI("foo://us%2Fer@example.com:8042/aaa/bbb%2Fccc/ddd?na%2Fme=ferret#no%2Fse")
+    assert(uri.getScheme === "foo")
+    assert(uri.getAuthority === "us/er@example.com:8042")
+    assert(uri.getRawAuthority === "us%2Fer@example.com:8042")
+    assert(uri.getPath === "/aaa/bbb/ccc/ddd")
+    assert(uri.getRawPath === "/aaa/bbb%2Fccc/ddd")
+    assert(uri.getQuery === "na/me=ferret")
+    assert(uri.getRawQuery === "na%2Fme=ferret")
+    assert(uri.getFragment === "no/se")
+    assert(uri.getRawFragment === "no%2Fse")
+    assert(uri.getHost === "example.com")
+    assert(uri.getPort === 8042)
+    assert(uri.getSchemeSpecificPart === "//us/er@example.com:8042/aaa/bbb/ccc/ddd?na/me=ferret")
+    assert(uri.getRawSchemeSpecificPart === "//us%2Fer@example.com:8042/aaa/bbb%2Fccc/ddd?na%2Fme=ferret")
+    assert(uri.getUserInfo === "us/er")
+    assert(uri.getRawUserInfo === "us%2Fer")
+    assert(uri.toString === "foo://us%2Fer@example.com:8042/aaa/bbb%2Fccc/ddd?na%2Fme=ferret#no%2Fse")
+    assert(uri.toASCIIString === "foo://us%2Fer@example.com:8042/aaa/bbb%2Fccc/ddd?na%2Fme=ferret#no%2Fse")
+  }
 }
