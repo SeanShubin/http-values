@@ -4,7 +4,7 @@ import java.net.URI
 import javax.servlet.http.HttpServletRequest
 
 import org.scalatest.FunSuite
-import org.scalatest.mock.EasyMockSugar
+import org.scalatest.easymock.EasyMockSugar
 
 import scala.collection.JavaConverters._
 

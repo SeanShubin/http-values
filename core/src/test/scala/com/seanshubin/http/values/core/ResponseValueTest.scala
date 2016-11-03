@@ -5,7 +5,7 @@ import java.nio.charset.StandardCharsets
 import javax.servlet.http.HttpServletResponse
 
 import org.scalatest.FunSuite
-import org.scalatest.mock.EasyMockSugar
+import org.scalatest.easymock.EasyMockSugar
 
 class ResponseValueTest extends FunSuite with EasyMockSugar {
   test("serialize to servlet response") {

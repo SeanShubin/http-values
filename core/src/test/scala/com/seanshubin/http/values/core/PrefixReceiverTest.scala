@@ -1,7 +1,7 @@
 package com.seanshubin.http.values.core
 
 import org.scalatest.FunSuite
-import org.scalatest.mock.EasyMockSugar
+import org.scalatest.easymock.EasyMockSugar
 
 class PrefixReceiverTest extends FunSuite with EasyMockSugar {
   test("forward along without prefix") {
