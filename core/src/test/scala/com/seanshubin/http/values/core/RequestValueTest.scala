@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletRequest
 import org.scalatest.FunSuite
 import org.scalatest.mock.EasyMockSugar
 
-import scala.collection.JavaConversions
+import scala.collection.JavaConverters._
 
 class RequestValueTest extends FunSuite with EasyMockSugar {
   test("construct from servlet request") {
@@ -20,7 +20,7 @@ class RequestValueTest extends FunSuite with EasyMockSugar {
       httpServletRequest.getRequestURI.andReturn("/over/there")
       httpServletRequest.getQueryString.andReturn("name=ferret")
       httpServletRequest.getInputStream.andReturn(StubServletInputStream.fromText("Hello, world!", "utf-8"))
-      httpServletRequest.getHeaderNames.andReturn(JavaConversions.asJavaEnumeration(Seq("Content-Type").iterator))
+      httpServletRequest.getHeaderNames.andReturn(Seq("Content-Type").iterator.asJavaEnumeration)
       httpServletRequest.getHeader("Content-Type").andReturn("text/plain; charset=utf-8")
     }
     whenExecuting(httpServletRequest) {

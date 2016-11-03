@@ -4,7 +4,7 @@ import com.google.api.client.http._
 import com.google.api.client.http.javanet.NetHttpTransport
 import com.seanshubin.http.values.core._
 
-import scala.collection.JavaConversions
+import scala.collection.JavaConverters._
 
 class HttpSender extends Sender {
   override def send(request: RequestValue): ResponseValue = {
@@ -15,7 +15,7 @@ class HttpSender extends Sender {
     val inputStream = httpResponse.getContent
     val bytes = IoUtil.inputStreamToBytes(inputStream)
     val javaMapHeaders: java.util.Map[String, AnyRef] = httpResponse.getHeaders
-    val scalaMapHeaders: Map[String, AnyRef] = JavaConversions.mapAsScalaMap(javaMapHeaders).toSeq.toMap
+    val scalaMapHeaders: Map[String, AnyRef] = javaMapHeaders.asScala.toSeq.toMap
     val headerEntries: Map[String, String] = scalaMapHeaders.flatMap(headerToEntries)
     val headers = Headers.fromEntries(headerEntries.toSeq)
     val responseValue = ResponseValue(statusCode, bytes, headers.entries)
@@ -25,7 +25,7 @@ class HttpSender extends Sender {
   def headerToEntries(entry: (String, AnyRef)): Seq[(String, String)] = {
     val (key, listAsObject) = entry
     val javaList = listAsObject.asInstanceOf[java.util.List[_]]
-    val seq: Seq[_] = JavaConversions.asScalaBuffer(javaList)
+    val seq: Seq[_] = javaList.asScala
     val entries: Seq[(String, String)] = seq.map(value => (key, if (value == null) "" else value.toString))
     entries
   }

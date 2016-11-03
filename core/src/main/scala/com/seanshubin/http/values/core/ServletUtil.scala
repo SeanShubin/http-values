@@ -2,7 +2,7 @@ package com.seanshubin.http.values.core
 
 import javax.servlet.http.{HttpServletRequest, HttpServletResponse}
 
-import scala.collection.JavaConversions
+import scala.collection.JavaConverters._
 
 object ServletUtil {
   def writeValue(value: ResponseValue, response: HttpServletResponse): Unit = {
@@ -28,7 +28,7 @@ object ServletUtil {
     val uri = new UriValue(scheme, userInfo, host, port, path, queryValue, fragment)
     val method = request.getMethod
     val body = IoUtil.inputStreamToBytes(request.getInputStream)
-    val headerNames = JavaConversions.enumerationAsScalaIterator(request.getHeaderNames)
+    val headerNames = request.getHeaderNames.asScala
     val headerEntries = for {
       headerName <- headerNames
     } yield {
