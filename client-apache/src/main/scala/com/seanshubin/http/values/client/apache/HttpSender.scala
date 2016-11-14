@@ -1,6 +1,6 @@
 package com.seanshubin.http.values.client.apache
 
-import com.seanshubin.http.values.core._
+import com.seanshubin.http.values.domain._
 import org.apache.http.Header
 import org.apache.http.client.methods._
 import org.apache.http.impl.client.HttpClients

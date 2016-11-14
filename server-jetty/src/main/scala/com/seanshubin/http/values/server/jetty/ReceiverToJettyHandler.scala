@@ -2,7 +2,7 @@ package com.seanshubin.http.values.server.jetty
 
 import javax.servlet.http.{HttpServletRequest, HttpServletResponse}
 
-import com.seanshubin.http.values.core.{Receiver, ServletUtil}
+import com.seanshubin.http.values.domain.{Receiver, ServletUtil}
 import org.eclipse.jetty.server.Request
 import org.eclipse.jetty.server.handler.AbstractHandler
 

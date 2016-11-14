@@ -10,7 +10,7 @@
     <dependencies>
         <dependency>
             <groupId>com.seanshubin</groupId>
-            <artifactId>http-values-core</artifactId>
+            <artifactId>http-values-domain</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
         <dependency>

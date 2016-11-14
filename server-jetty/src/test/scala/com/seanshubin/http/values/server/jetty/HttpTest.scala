@@ -2,7 +2,7 @@ package com.seanshubin.http.values.server.jetty
 
 import com.seanshubin.http.values.client.apache.{HttpSender => ApacheSender}
 import com.seanshubin.http.values.client.google.{HttpSender => GoogleSender}
-import com.seanshubin.http.values.core._
+import com.seanshubin.http.values.domain._
 import org.eclipse.jetty.server.Server
 import org.scalatest.FunSuite
 

@@ -1,15 +1,15 @@
 {
-  reportDir generated/detangled
+  reportDir target/detangler
   searchPaths
   [
-    core/target/http-values-core-1.0-SNAPSHOT.jar
+    domain/target/http-values-domain-1.0-SNAPSHOT.jar
   ]
   level 1
   startsWith
   {
-    include [[com seanshubin http values core]]
+    include [[com seanshubin http values domain]]
     exclude []
-    drop [[com seanshubin http values core]]
+    drop [[com seanshubin http values domain]]
   }
   ignoreFiles []
   canFailBuild true

@@ -2,7 +2,7 @@ package com.seanshubin.http.values.client.google
 
 import com.google.api.client.http._
 import com.google.api.client.http.javanet.NetHttpTransport
-import com.seanshubin.http.values.core._
+import com.seanshubin.http.values.domain._
 
 import scala.collection.JavaConverters._
 
