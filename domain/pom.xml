@@ -29,8 +29,8 @@
         </dependency>
     </dependencies>
     <parent>
-        <groupId>com.seanshubin</groupId>
-        <artifactId>http-values</artifactId>
+        <groupId>com.seanshubin.http.values</groupId>
+        <artifactId>http-values-parent</artifactId>
         <version>1.0</version>
     </parent>
     <!--<dependencyManagement>...</dependencyManagement>-->
@@ -67,7 +67,7 @@
     <!--<reporting>...</reporting>-->
 
     <!-- More Project Information -->
-    <name>http-values-domain</name>
+    <name>${project.groupId}:${project.artifactId}</name>
     <!--<description>...</description>-->
     <!--<url>...</url>-->
     <!--<inceptionYear>...</inceptionYear>-->

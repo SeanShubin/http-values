@@ -11,18 +11,18 @@
     <!--<packaging>...</packaging>-->
     <dependencies>
         <dependency>
-            <groupId>com.seanshubin</groupId>
+            <groupId>com.seanshubin.http.values</groupId>
             <artifactId>http-values-domain</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.seanshubin</groupId>
+            <groupId>com.seanshubin.http.values</groupId>
             <artifactId>http-values-client-apache</artifactId>
             <version>${project.parent.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>com.seanshubin</groupId>
+            <groupId>com.seanshubin.http.values</groupId>
             <artifactId>http-values-client-google</artifactId>
             <version>${project.parent.version}</version>
             <scope>test</scope>
@@ -45,8 +45,8 @@
         </dependency>
     </dependencies>
     <parent>
-        <groupId>com.seanshubin</groupId>
-        <artifactId>http-values</artifactId>
+        <groupId>com.seanshubin.http.values</groupId>
+        <artifactId>http-values-parent</artifactId>
         <version>1.0</version>
     </parent>
     <!--<dependencyManagement>...</dependencyManagement>-->
@@ -67,8 +67,8 @@
     <!--<reporting>...</reporting>-->
 
     <!-- More Project Information -->
-    <name>http-values-server-jetty</name>
-    <!--<description>...</description>-->
+    <name>${project.groupId}:${project.artifactId}</name>
+    <description>Http client and server, treat HTTP as a function that when given a request, returns a response</description>
     <!--<url>...</url>-->
     <!--<inceptionYear>...</inceptionYear>-->
     <!--<licenses>...</licenses>-->

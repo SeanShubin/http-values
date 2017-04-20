@@ -11,7 +11,7 @@
     <!--<packaging>...</packaging>-->
     <dependencies>
         <dependency>
-            <groupId>com.seanshubin</groupId>
+            <groupId>com.seanshubin.http.values</groupId>
             <artifactId>http-values-domain</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
@@ -33,8 +33,8 @@
         </dependency>
     </dependencies>
     <parent>
-        <groupId>com.seanshubin</groupId>
-        <artifactId>http-values</artifactId>
+        <groupId>com.seanshubin.http.values</groupId>
+        <artifactId>http-values-parent</artifactId>
         <version>1.0</version>
     </parent>
     <!--<dependencyManagement>...</dependencyManagement>-->
@@ -55,7 +55,7 @@
     <!--<reporting>...</reporting>-->
 
     <!-- More Project Information -->
-    <name>http-values-client-google</name>
+    <name>${project.groupId}:${project.artifactId}</name>
     <!--<description>...</description>-->
     <!--<url>...</url>-->
     <!--<inceptionYear>...</inceptionYear>-->

@@ -5,8 +5,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <!-- The Basics -->
-    <groupId>com.seanshubin</groupId>
-    <artifactId>http-values</artifactId>
+    <groupId>com.seanshubin.http.values</groupId>
+    <artifactId>http-values-parent</artifactId>
     <version>1.0</version>
     <packaging>pom</packaging>
     <!--<dependencies>...</dependencies>-->
@@ -141,20 +141,35 @@
     <!--<reporting>...</reporting>-->
 
     <!-- More Project Information -->
-    <name>http-values</name>
+    <name>${project.groupId}:${project.artifactId}</name>
     <!--<description>...</description>-->
-    <!--<url>...</url>-->
+    <url>https://github.com/SeanShubin/http-values</url>
     <!--<inceptionYear>...</inceptionYear>-->
-    <!--<licenses>...</licenses>-->
+    <licenses>
+        <license>
+            <name>Unlicense</name>
+            <url>http://unlicense.org/</url>
+        </license>
+    </licenses>
     <!--<organization>...</organization>-->
-    <!--<developers>...</developers>-->
+    <developers>
+        <developer>
+            <name>Sean Shubin</name>
+            <organization>Sean Shubin</organization>
+            <organizationUrl>http://seanshubin.com/</organizationUrl>
+        </developer>
+    </developers>
     <!--<contributors>...</contributors>-->
 
     <!-- Environment Settings -->
     <!--<issueManagement>...</issueManagement>-->
     <!--<ciManagement>...</ciManagement>-->
     <!--<mailingLists>...</mailingLists>-->
-    <!--<scm>...</scm>-->
+    <scm>
+        <connection>scm:git:git@github.com:SeanShubin/http-values.git</connection>
+        <developerConnection>scm:git:git@github.com:SeanShubin/http-values.git</developerConnection>
+        <url>https://github.com/SeanShubin/http-values</url>
+    </scm>
     <!--<prerequisites>...</prerequisites>-->
     <!--<repositories>...</repositories>-->
     <pluginRepositories>
@@ -165,9 +180,45 @@
     </pluginRepositories>
     <distributionManagement>
         <repository>
-            <id>sean</id>
-            <url>http://thoughtfulcraftsmanship.com/nexus/content/repositories/sean-snapshots</url>
+            <id>maven-staging</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
         </repository>
     </distributionManagement>
-    <!--<profiles>...</profiles>-->
+    <profiles>
+        <profile>
+            <id>stage</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>1.6</version>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <version>2.10.4</version>
+                        <executions>
+                            <execution>
+                                <id>generate-dummy-javadoc-per-maven-central-requirements</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>
