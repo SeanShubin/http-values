@@ -39,7 +39,7 @@ class ClassLoaderReceiver(classLoader: ClassLoader,
           val result = new FileInputStream(path + resourceName)
           result
         } catch {
-          case ex: FileNotFoundException =>
+          case _: FileNotFoundException =>
             val result = classLoader.getResourceAsStream(resourceName)
             result
         }

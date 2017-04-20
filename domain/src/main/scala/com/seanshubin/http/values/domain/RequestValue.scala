@@ -34,7 +34,7 @@ case class RequestValue(uri: UriValue, method: String, body: Seq[Byte], headers:
       s"$key -> $quotedValue"
     }
     val caption = s"header: ${headers.size} entries"
-    caption +: headers.map(headerToString).toSeq.map("  " + _)
+    caption +: headers.map(headerToString).map("  " + _)
   }
 }
 

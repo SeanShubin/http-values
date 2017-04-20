@@ -10,13 +10,13 @@ case class ContentType(typeAndSubtype: String, maybeCharset: Option[String]) {
 }
 
 object ContentType {
-  val wordPattern = """[\w\-]+"""
-  val maybeSpacesPattern = """\s*"""
-  val contentTypeOnlyPattern = RegexUtil.capture(wordPattern + "/" + wordPattern)
-  val charsetPattern = "charset" + maybeSpacesPattern + "=" + maybeSpacesPattern + RegexUtil.capture(wordPattern)
-  val contentTypePattern =
+  private val wordPattern = """[\w\-]+"""
+  private val maybeSpacesPattern = """\s*"""
+  private val contentTypeOnlyPattern = RegexUtil.capture(wordPattern + "/" + wordPattern)
+  private val charsetPattern = "charset" + maybeSpacesPattern + "=" + maybeSpacesPattern + RegexUtil.capture(wordPattern)
+  private val contentTypePattern =
     contentTypeOnlyPattern + maybeSpacesPattern + RegexUtil.optional(";" + maybeSpacesPattern + charsetPattern)
-  val ContentTypeRegex = contentTypePattern.r
+  private val ContentTypeRegex = contentTypePattern.r
 
   def fromString(value: String): ContentType = {
     value match {

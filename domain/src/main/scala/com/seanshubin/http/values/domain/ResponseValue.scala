@@ -34,7 +34,7 @@ case class ResponseValue(statusCode: Int, body: Seq[Byte], headers: Seq[(String,
       s"$key -> $quotedValue"
     }
     val caption = s"header: ${headers.size} entries"
-    caption +: headers.map(headerToString).toSeq.map("  " + _)
+    caption +: headers.map(headerToString).map("  " + _)
   }
 
   def withLowerCaseHeaderKeys: ResponseValue = {
@@ -50,13 +50,13 @@ case class ResponseValue(statusCode: Int, body: Seq[Byte], headers: Seq[(String,
 object ResponseValue {
   def isSuccess(statusCode: Int): Boolean = statusCode >= 200 && statusCode <= 399
 
-  def fromText(statusCode: Int, contentType: ContentType, text: String, headerEntries: Seq[(String, String)]) = {
+  def fromText(statusCode: Int, contentType: ContentType, text: String, headerEntries: Seq[(String, String)]):ResponseValue = {
     val body = text.getBytes(contentType.charset)
     val newHeaders = Headers.fromEntries(headerEntries).setContentType(contentType)
     new ResponseValue(statusCode, body, newHeaders.entries)
   }
 
-  def fromBytes(statusCode: Int, contentType: ContentType, bytes: Seq[Byte], headerEntries: Seq[(String, String)]) = {
+  def fromBytes(statusCode: Int, contentType: ContentType, bytes: Seq[Byte], headerEntries: Seq[(String, String)]):ResponseValue = {
     val newHeaders = Headers.fromEntries(headerEntries).setContentType(contentType)
     new ResponseValue(statusCode, bytes, newHeaders.entries)
   }

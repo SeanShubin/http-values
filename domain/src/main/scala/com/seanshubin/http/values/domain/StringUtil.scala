@@ -65,15 +65,16 @@ object StringUtil {
 
   def doubleQuote(target: String): String = "\"" + escape(target) + "\""
 
-  def rightJustify(target: String, width: Int): String = {
-    val formatString = String.format("%%%ds", width.asInstanceOf[Integer])
-    val justified = String.format(formatString, target)
-    justified
+  def rightJustify(s: String, width: Int): String = {
+    paddingFor(s, width) + s
   }
 
-  def leftJustify(target: String, width: Int): String = {
-    val formatString = String.format("%%-%ds", width.asInstanceOf[Integer])
-    val justified = String.format(formatString, target)
-    justified
+  def leftJustify(s: String, width: Int): String = {
+    s + paddingFor(s, width)
+  }
+
+  private def paddingFor(s: String, width: Int): String = {
+    val quantity = width - s.length
+    " " * quantity
   }
 }
