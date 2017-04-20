@@ -20,6 +20,7 @@ case class Headers(entries: Seq[(String, String)]) {
       val (key, _) = entry
       key == "content-type"
     }
+
     val index = entries.indexWhere(isContentType)
     val newContentTypeEntry = "content-type" -> contentType.toString
     if (index == -1) {
@@ -50,7 +51,7 @@ object Headers {
     val newKey = currentKey.toLowerCase
     val index = accumulator.map(_._1).indexOf(newKey)
     if (index == -1) {
-      accumulator :+(newKey, currentValue)
+      accumulator :+ (newKey, currentValue)
     } else {
       val (_, oldValue) = accumulator(0)
       val newValue = oldValue + "," + currentValue //Wondering why a comma is used?  See http://www.w3.org/Protocols/rfc2616/rfc2616-sec4.html#sec4.2
@@ -63,7 +64,7 @@ object Headers {
     val newKey = currentKey.toLowerCase
     val index = accumulator.map(_._1).indexOf(newKey)
     if (index == -1) {
-      accumulator :+(newKey, currentValue)
+      accumulator :+ (newKey, currentValue)
     } else {
       val newValue = currentValue
       accumulator.updated(index, (newKey, newValue))

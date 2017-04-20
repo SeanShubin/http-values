@@ -13,6 +13,7 @@ object IoUtil {
         loop(inputStream.read())
       }
     }
+
     loop(inputStream.read())
   }
 
@@ -24,6 +25,7 @@ object IoUtil {
         loop(reader.read())
       }
     }
+
     loop(reader.read())
   }
 

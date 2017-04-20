@@ -33,6 +33,7 @@ case class ResponseValue(statusCode: Int, body: Seq[Byte], headers: Seq[(String,
       val quotedValue = StringUtil.doubleQuote(value)
       s"$key -> $quotedValue"
     }
+
     val caption = s"header: ${headers.size} entries"
     caption +: headers.map(headerToString).map("  " + _)
   }
@@ -42,6 +43,7 @@ case class ResponseValue(statusCode: Int, body: Seq[Byte], headers: Seq[(String,
       val (key, value) = entry
       (key.toLowerCase, value)
     }
+
     val newHeaders = headers.map(keyToLowerCase)
     copy(headers = newHeaders)
   }
@@ -50,13 +52,13 @@ case class ResponseValue(statusCode: Int, body: Seq[Byte], headers: Seq[(String,
 object ResponseValue {
   def isSuccess(statusCode: Int): Boolean = statusCode >= 200 && statusCode <= 399
 
-  def fromText(statusCode: Int, contentType: ContentType, text: String, headerEntries: Seq[(String, String)]):ResponseValue = {
+  def fromText(statusCode: Int, contentType: ContentType, text: String, headerEntries: Seq[(String, String)]): ResponseValue = {
     val body = text.getBytes(contentType.charset)
     val newHeaders = Headers.fromEntries(headerEntries).setContentType(contentType)
     new ResponseValue(statusCode, body, newHeaders.entries)
   }
 
-  def fromBytes(statusCode: Int, contentType: ContentType, bytes: Seq[Byte], headerEntries: Seq[(String, String)]):ResponseValue = {
+  def fromBytes(statusCode: Int, contentType: ContentType, bytes: Seq[Byte], headerEntries: Seq[(String, String)]): ResponseValue = {
     val newHeaders = Headers.fromEntries(headerEntries).setContentType(contentType)
     new ResponseValue(statusCode, bytes, newHeaders.entries)
   }
