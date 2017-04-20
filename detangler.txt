@@ -2,7 +2,7 @@
   reportDir target/detangler
   searchPaths
   [
-    domain/target/http-values-domain-1.0-SNAPSHOT.jar
+    domain/target/http-values-domain-1.0.jar
   ]
   level 1
   startsWith

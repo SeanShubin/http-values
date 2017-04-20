@@ -9,13 +9,7 @@
     <artifactId>http-values</artifactId>
     <version>1.0</version>
     <packaging>pom</packaging>
-    <dependencies>
-        <dependency>
-            <groupId>org.scalatest</groupId>
-            <artifactId>scalatest_2.12</artifactId>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
+    <!--<dependencies>...</dependencies>-->
     <!--<parent>...</parent>-->
     <dependencyManagement>
         <dependencies>
