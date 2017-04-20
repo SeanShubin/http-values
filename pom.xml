@@ -1,26 +1,22 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<project>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                      http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+
+    <!-- The Basics -->
     <groupId>com.seanshubin</groupId>
     <artifactId>http-values</artifactId>
-    <name>http-values</name>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
     <packaging>pom</packaging>
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
-    <modules>
-        <module>domain</module>
-        <module>server-jetty</module>
-        <module>client-apache</module>
-        <module>client-google</module>
-    </modules>
-    <pluginRepositories>
-        <pluginRepository>
-            <id>onejar</id>
-            <url>http://onejar-maven-plugin.googlecode.com/svn/mavenrepo</url>
-        </pluginRepository>
-    </pluginRepositories>
+    <dependencies>
+        <dependency>
+            <groupId>org.scalatest</groupId>
+            <artifactId>scalatest_2.12</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+    <!--<parent>...</parent>-->
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -62,13 +58,17 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-    <dependencies>
-        <dependency>
-            <groupId>org.scalatest</groupId>
-            <artifactId>scalatest_2.12</artifactId>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
+    <modules>
+        <module>domain</module>
+        <module>server-jetty</module>
+        <module>client-apache</module>
+        <module>client-google</module>
+    </modules>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <!-- Build Settings -->
     <build>
         <plugins>
             <plugin>
@@ -144,10 +144,36 @@
             </plugins>
         </pluginManagement>
     </build>
+    <!--<reporting>...</reporting>-->
+
+    <!-- More Project Information -->
+    <name>http-values</name>
+    <!--<description>...</description>-->
+    <!--<url>...</url>-->
+    <!--<inceptionYear>...</inceptionYear>-->
+    <!--<licenses>...</licenses>-->
+    <!--<organization>...</organization>-->
+    <!--<developers>...</developers>-->
+    <!--<contributors>...</contributors>-->
+
+    <!-- Environment Settings -->
+    <!--<issueManagement>...</issueManagement>-->
+    <!--<ciManagement>...</ciManagement>-->
+    <!--<mailingLists>...</mailingLists>-->
+    <!--<scm>...</scm>-->
+    <!--<prerequisites>...</prerequisites>-->
+    <!--<repositories>...</repositories>-->
+    <pluginRepositories>
+        <pluginRepository>
+            <id>onejar</id>
+            <url>http://onejar-maven-plugin.googlecode.com/svn/mavenrepo</url>
+        </pluginRepository>
+    </pluginRepositories>
     <distributionManagement>
         <repository>
             <id>sean</id>
             <url>http://thoughtfulcraftsmanship.com/nexus/content/repositories/sean-snapshots</url>
         </repository>
     </distributionManagement>
+    <!--<profiles>...</profiles>-->
 </project>
