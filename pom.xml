@@ -172,12 +172,7 @@
     </scm>
     <!--<prerequisites>...</prerequisites>-->
     <!--<repositories>...</repositories>-->
-    <pluginRepositories>
-        <pluginRepository>
-            <id>onejar</id>
-            <url>http://onejar-maven-plugin.googlecode.com/svn/mavenrepo</url>
-        </pluginRepository>
-    </pluginRepositories>
+    <!--<pluginRepositories>...</pluginRepositories>-->
     <distributionManagement>
         <repository>
             <id>maven-staging</id>

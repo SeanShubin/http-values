@@ -30,8 +30,6 @@ class PrefixReceiverTest extends FunSuite with EasyMockSugar {
     }
     whenExecuting(forwardTo) {
       val modifiedResponse = prefixReceiver.receive(request)
-      modifiedResponse.toMultipleLineString.foreach(println)
-      expectedResponse.toMultipleLineString.foreach(println)
       assert(modifiedResponse === expectedResponse)
     }
   }
