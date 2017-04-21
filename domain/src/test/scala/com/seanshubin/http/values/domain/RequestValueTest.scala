@@ -1,36 +1,38 @@
 package com.seanshubin.http.values.domain
 
 import java.net.URI
-import javax.servlet.http.HttpServletRequest
+import java.util
+import javax.servlet.ServletInputStream
 
 import org.scalatest.FunSuite
-import org.scalatest.easymock.EasyMockSugar
 
 import scala.collection.JavaConverters._
 
-class RequestValueTest extends FunSuite with EasyMockSugar {
+class RequestValueTest extends FunSuite {
   test("construct from servlet request") {
-    val httpServletRequest = mock[HttpServletRequest]
-    expecting {
-      httpServletRequest.getMethod.andReturn("the-method")
-      httpServletRequest.getScheme.andReturn("foo")
-      httpServletRequest.getRemoteUser.andReturn("user")
-      httpServletRequest.getRemoteHost.andReturn("example.com")
-      httpServletRequest.getRemotePort.andReturn(8042)
-      httpServletRequest.getRequestURI.andReturn("/over/there")
-      httpServletRequest.getQueryString.andReturn("name=ferret")
-      httpServletRequest.getInputStream.andReturn(StubServletInputStream.fromText("Hello, world!", "utf-8"))
-      httpServletRequest.getHeaderNames.andReturn(Seq("Content-Type").iterator.asJavaEnumeration)
-      httpServletRequest.getHeader("Content-Type").andReturn("text/plain; charset=utf-8")
-    }
-    whenExecuting(httpServletRequest) {
-      val requestValue = ServletUtil.readValue(httpServletRequest)
-      assert(requestValue.method === "the-method")
-      assert(requestValue.uri.toString === "foo://user@example.com:8042/over/there?name=ferret")
-      assert(requestValue.uri.toUri === new URI("foo://user@example.com:8042/over/there?name=ferret"))
-      assert(requestValue.text === "Hello, world!")
-      assert(requestValue.maybeContentType === Some(ContentType("text/plain", Some("utf-8"))))
-    }
+    // given
+    val stubRequestInfo = StubRequestInfo(
+      method = "the-method",
+      scheme = "foo",
+      remoteUser = "user",
+      remoteHost = "example.com",
+      remotePort = 8042,
+      requestUri = "/over/there",
+      queryString = "name=ferret",
+      inputStreamText = "Hello, world!",
+      headers = Seq(("Content-Type", "text/plain; charset=utf-8"))
+    )
+    val stubRequest = new StubServletRequest(stubRequestInfo)
+
+    // when
+    val requestValue = ServletUtil.readValue(stubRequest)
+
+    // then
+    assert(requestValue.method === "the-method")
+    assert(requestValue.uri.toString === "foo://user@example.com:8042/over/there?name=ferret")
+    assert(requestValue.uri.toUri === new URI("foo://user@example.com:8042/over/there?name=ferret"))
+    assert(requestValue.text === "Hello, world!")
+    assert(requestValue.maybeContentType === Some(ContentType("text/plain", Some("utf-8"))))
   }
 
   test("different body types") {
@@ -81,4 +83,37 @@ class RequestValueTest extends FunSuite with EasyMockSugar {
     }
     assert(exception.getMessage === "Charset must be present in order to get text")
   }
+
+  case class StubRequestInfo(method: String,
+                             scheme: String,
+                             remoteUser: String,
+                             remoteHost: String,
+                             remotePort: Int,
+                             requestUri: String,
+                             queryString: String,
+                             inputStreamText: String,
+                             headers: Seq[(String, String)])
+
+  class StubServletRequest(info: StubRequestInfo) extends HttpServletRequestNotImplemented {
+    override def getMethod: String = info.method
+
+    override def getScheme: String = info.scheme
+
+    override def getRemoteUser: String = info.remoteUser
+
+    override def getRemoteHost: String = info.remoteHost
+
+    override def getRemotePort: Int = info.remotePort
+
+    override def getRequestURI: String = info.requestUri
+
+    override def getQueryString: String = info.queryString
+
+    override def getInputStream: ServletInputStream = StubServletInputStream.fromText(info.inputStreamText, "utf-8")
+
+    override def getHeaderNames: util.Enumeration[String] = info.headers.map(_._1).iterator.asJavaEnumeration
+
+    override def getHeader(name: String): String = info.headers.toMap.apply(name)
+  }
+
 }
