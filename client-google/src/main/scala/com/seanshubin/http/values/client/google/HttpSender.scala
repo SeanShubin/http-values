@@ -9,6 +9,7 @@ import scala.collection.JavaConverters._
 class HttpSender extends Sender {
   override def send(request: RequestValue): ResponseValue = {
     val httpRequest: HttpRequest = HttpSender.requestMap(request.method.toLowerCase)(request)
+    request.headers.foreach(setHeader(httpRequest))
     httpRequest.setThrowExceptionOnExecuteError(false)
     val httpResponse: HttpResponse = httpRequest.execute()
     val statusCode = httpResponse.getStatusCode
@@ -28,6 +29,11 @@ class HttpSender extends Sender {
     val seq: Seq[_] = javaList.asScala
     val entries: Seq[(String, String)] = seq.map(value => (key, if (value == null) "" else value.toString))
     entries
+  }
+
+  def setHeader(httpRequest: HttpRequest)(entry: (String, String)): Unit = {
+    val (fieldName, value) = entry
+    httpRequest.getHeaders.set(fieldName, value)
   }
 }
 
