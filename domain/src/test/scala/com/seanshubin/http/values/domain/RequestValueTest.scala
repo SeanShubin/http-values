@@ -109,7 +109,7 @@ class RequestValueTest extends FunSuite {
 
     override def getQueryString: String = info.queryString
 
-    override def getInputStream: ServletInputStream = StubServletInputStream.fromText(info.inputStreamText, "utf-8")
+    override def getInputStream: ServletInputStream = ServletInputStreamStub.fromText(info.inputStreamText, "utf-8")
 
     override def getHeaderNames: util.Enumeration[String] = info.headers.map(_._1).iterator.asJavaEnumeration
 

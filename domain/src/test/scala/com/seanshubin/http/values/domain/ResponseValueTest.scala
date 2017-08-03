@@ -1,28 +1,27 @@
 package com.seanshubin.http.values.domain
 
-import java.io.ByteArrayOutputStream
 import java.nio.charset.StandardCharsets
-import javax.servlet.http.HttpServletResponse
+import javax.servlet.ServletOutputStream
 
 import org.scalatest.FunSuite
-import org.scalatest.easymock.EasyMockSugar
 
-class ResponseValueTest extends FunSuite with EasyMockSugar {
+import scala.collection.mutable.ArrayBuffer
+
+class ResponseValueTest extends FunSuite {
   test("serialize to servlet response") {
-    val httpServletResponse = mock[HttpServletResponse]
+    // given
+    val httpServletResponse = new HttpServletResponseStub
     val responseValue = ResponseValue.fromText(200, ContentType("text/plain", Some("utf-8")), "Hello, world!", Seq("header-name" -> "header-value"))
-    val backingOutputStream = new ByteArrayOutputStream()
-    val fakeServletOutputStream = new StubServletOutputStream(backingOutputStream)
-    expecting {
-      httpServletResponse.setStatus(200)
-      httpServletResponse.getOutputStream.andReturn(fakeServletOutputStream)
-      httpServletResponse.setHeader("header-name", "header-value")
-      httpServletResponse.setHeader("content-type", "text/plain; charset=utf-8")
-    }
-    whenExecuting(httpServletResponse) {
-      ServletUtil.writeValue(responseValue, httpServletResponse)
-      assert(new String(backingOutputStream.toByteArray, "utf-8") === "Hello, world!")
-    }
+
+    // when
+    ServletUtil.writeValue(responseValue, httpServletResponse)
+
+    // then
+    assert(httpServletResponse.statusCode === 200)
+    assert(httpServletResponse.headers === Seq(
+      "header-name" -> "header-value",
+      "content-type" -> "text/plain; charset=utf-8"))
+    assert(httpServletResponse.outputStream.asUtf8 === "Hello, world!")
   }
 
   test("text response value as text") {
@@ -49,4 +48,17 @@ class ResponseValueTest extends FunSuite with EasyMockSugar {
     )
     assert(actual === expected)
   }
+
+  class HttpServletResponseStub extends HttpServletResponseNotImplemented {
+    var statusCode: Int = -1
+    val headers = new ArrayBuffer[(String, String)]()
+    val outputStream = new ServletOutputStreamStub
+
+    override def setStatus(sc: Int): Unit = statusCode = sc
+
+    override def setHeader(name: String, value: String): Unit = headers.append((name, value))
+
+    override def getOutputStream: ServletOutputStream = outputStream
+  }
+
 }
