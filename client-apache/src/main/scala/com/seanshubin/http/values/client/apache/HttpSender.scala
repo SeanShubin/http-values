@@ -7,7 +7,7 @@ import org.apache.http.impl.client.HttpClients
 
 class HttpSender extends Sender {
   override def send(request: RequestValue): ResponseValue = {
-    val httpUriRequest: HttpUriRequest = HttpSender.requestMap(request.method)(request)
+    val httpUriRequest: HttpUriRequest = HttpSender.requestMap(request.method.toLowerCase)(request)
     val httpClient = HttpClients.createDefault()
     val httpResponse = httpClient.execute(httpUriRequest)
     val statusCode = httpResponse.getStatusLine.getStatusCode
