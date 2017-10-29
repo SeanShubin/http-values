@@ -52,6 +52,7 @@ object HttpSender {
   def toGenericUrl(request: RequestValue): GenericUrl = new GenericUrl(request.uri.toUri)
 
   def toHttpContent(request: RequestValue): HttpContent = {
-    new ByteArrayContent(Headers.fromEntries(request.headers).maybeContentType.get.toString, request.body.toArray)
+    val contentType = Headers.fromEntries(request.headers).maybeContentType.map(_.toString).orNull
+    new ByteArrayContent(contentType, request.body.toArray)
   }
 }

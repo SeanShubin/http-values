@@ -1,13 +1,10 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
-                      http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0                       http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <!-- The Basics -->
     <groupId>com.seanshubin.http.values</groupId>
     <artifactId>http-values-parent</artifactId>
-    <version>1.0</version>
+    <version>1.0.1</version>
     <packaging>pom</packaging>
     <!--<dependencies>...</dependencies>-->
     <!--<parent>...</parent>-->
@@ -16,7 +13,7 @@
             <dependency>
                 <groupId>org.scala-lang</groupId>
                 <artifactId>scala-library</artifactId>
-                <version>2.12.3</version>
+                <version>2.12.4</version>
             </dependency>
             <dependency>
                 <groupId>org.easymock</groupId>
@@ -27,18 +24,18 @@
             <dependency>
                 <groupId>org.scalatest</groupId>
                 <artifactId>scalatest_2.12</artifactId>
-                <version>3.0.3</version>
+                <version>3.0.4</version>
                 <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>javax.servlet</groupId>
                 <artifactId>javax.servlet-api</artifactId>
-                <version>3.1.0</version>
+                <version>4.0.0</version>
             </dependency>
             <dependency>
                 <groupId>org.eclipse.jetty</groupId>
                 <artifactId>jetty-server</artifactId>
-                <version>9.4.6.v20170531</version>
+                <version>9.4.7.v20170914</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.httpcomponents</groupId>
@@ -48,7 +45,7 @@
             <dependency>
                 <groupId>com.google.http-client</groupId>
                 <artifactId>google-http-client</artifactId>
-                <version>1.22.0</version>
+                <version>1.23.0</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -84,6 +81,7 @@
                         <jvmArg>-Xmx1024m</jvmArg>
                     </jvmArgs>
                     <args>
+                        <arg>-unchecked</arg>
                         <arg>-deprecation</arg>
                         <arg>-feature</arg>
                     </args>
@@ -92,7 +90,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
-                <version>2.1.2</version>
+                <version>3.0.1</version>
                 <executions>
                     <execution>
                         <id>attach-sources</id>
@@ -108,7 +106,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.7</version>
+                <version>2.20</version>
                 <configuration>
                     <skipTests>true</skipTests>
                 </configuration>
@@ -142,7 +140,7 @@
 
     <!-- More Project Information -->
     <name>${project.groupId}:${project.artifactId}</name>
-    <!--<description>...</description>-->
+    <description>HTTP as a pure function</description>
     <url>https://github.com/SeanShubin/http-values</url>
     <!--<inceptionYear>...</inceptionYear>-->
     <licenses>

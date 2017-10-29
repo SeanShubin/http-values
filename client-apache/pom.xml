@@ -20,10 +20,6 @@
             <artifactId>scala-library</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.easymock</groupId>
-            <artifactId>easymock</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.scalatest</groupId>
             <artifactId>scalatest_2.12</artifactId>
         </dependency>
@@ -35,7 +31,7 @@
     <parent>
         <groupId>com.seanshubin.http.values</groupId>
         <artifactId>http-values-parent</artifactId>
-        <version>1.0</version>
+        <version>1.0.1</version>
     </parent>
     <!--<dependencyManagement>...</dependencyManagement>-->
     <!--<modules>...</modules>-->

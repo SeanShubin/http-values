@@ -3,7 +3,7 @@ package com.seanshubin.http.values.domain
 import java.io.{ByteArrayInputStream, InputStream}
 import javax.servlet.{ReadListener, ServletInputStream}
 
-class StubServletInputStream(backingInputStream: InputStream) extends ServletInputStream {
+class ServletInputStreamStub(backingInputStream: InputStream) extends ServletInputStream {
   override def isFinished: Boolean = ???
 
   override def isReady: Boolean = ???
@@ -13,8 +13,8 @@ class StubServletInputStream(backingInputStream: InputStream) extends ServletInp
   override def read(): Int = backingInputStream.read()
 }
 
-object StubServletInputStream {
+object ServletInputStreamStub {
   def fromText(text: String, charsetName: String) = fromBytes(text.getBytes(charsetName))
 
-  def fromBytes(bytes: Array[Byte]) = new StubServletInputStream(new ByteArrayInputStream(bytes))
+  def fromBytes(bytes: Array[Byte]) = new ServletInputStreamStub(new ByteArrayInputStream(bytes))
 }
