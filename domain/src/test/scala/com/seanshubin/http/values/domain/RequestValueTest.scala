@@ -75,13 +75,10 @@ class RequestValueTest extends FunSuite {
     assert(Headers.fromEntries(noContentType).effectiveCharset === "ISO-8859-1")
   }
 
-  test("can't get text without charset") {
+  test("use effective charset if charset not present") {
     val headers = Seq("Content-Type" -> "content/type")
     val requestValue = RequestValue("some-uri", "some method", "hello".getBytes("utf-8"), headers)
-    val exception = intercept[RuntimeException] {
-      requestValue.text
-    }
-    assert(exception.getMessage === "Charset must be present in order to get text")
+    assert(requestValue.text === "hello")
   }
 
   case class StubRequestInfo(method: String,

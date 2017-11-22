@@ -3,10 +3,7 @@ package com.seanshubin.http.values.domain
 case class ResponseValue(statusCode: Int, body: Seq[Byte], headers: Seq[(String, String)]) {
 
   def text: String = {
-    maybeCharset match {
-      case Some(charset) => new String(body.toArray, charset)
-      case None => throw new RuntimeException("Charset must be present in order to get text")
-    }
+    new String(body.toArray, Headers.fromEntries(headers).effectiveCharset)
   }
 
   def maybeCharset: Option[String] = maybeContentType.flatMap(_.maybeCharset)
