@@ -3,12 +3,14 @@ package com.seanshubin.http.values.domain
 case class ResponseValue(statusCode: Int, body: Seq[Byte], headers: Seq[(String, String)]) {
 
   def text: String = {
-    new String(body.toArray, Headers.fromEntries(headers).effectiveCharset)
+    new String(body.toArray, effectiveCharset)
   }
 
   def maybeCharset: Option[String] = maybeContentType.flatMap(_.maybeCharset)
 
   def maybeContentType: Option[ContentType] = Headers.fromEntries(headers).maybeContentType
+
+  def effectiveCharset: String = Headers.fromEntries(headers).effectiveCharset
 
   def toMultipleLineString: Seq[String] = {
     Seq(
