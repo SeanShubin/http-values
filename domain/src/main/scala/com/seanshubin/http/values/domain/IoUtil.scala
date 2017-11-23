@@ -1,32 +1,27 @@
 package com.seanshubin.http.values.domain
 
 import java.io._
+import java.nio.charset.Charset
 
 import scala.annotation.tailrec
 
 object IoUtil {
+  @tailrec
   def feedInputStreamToOutputStream(inputStream: InputStream, outputStream: OutputStream) {
-    @tailrec
-    def loop(byte: Int) {
-      if (byte != -1) {
-        outputStream.write(byte)
-        loop(inputStream.read())
-      }
+    val byte = inputStream.read()
+    if (byte != -1) {
+      outputStream.write(byte)
+      feedInputStreamToOutputStream(inputStream, outputStream)
     }
-
-    loop(inputStream.read())
   }
 
+  @tailrec
   def feedReaderToWriter(reader: Reader, writer: Writer) {
-    @tailrec
-    def loop(char: Int) {
-      if (char != -1) {
-        writer.write(char)
-        loop(reader.read())
-      }
+    val char = reader.read()
+    if (char != -1) {
+      writer.write(char)
+      feedReaderToWriter(reader, writer)
     }
-
-    loop(reader.read())
   }
 
   def inputStreamToBytes(inputStream: InputStream): Array[Byte] = {
@@ -36,15 +31,33 @@ object IoUtil {
     byteArray
   }
 
-  def bytesToOutputStream(bytes: Array[Byte], outputStream: OutputStream): Unit = {
-    val inputStream = new ByteArrayInputStream(bytes)
-    feedInputStreamToOutputStream(inputStream, outputStream)
-  }
-
   def readerToString(reader: Reader): String = {
     val writer = new StringWriter()
     feedReaderToWriter(reader, writer)
     val string = writer.toString
     string
   }
+
+  def bytesToInputStream(bytes: Array[Byte]): InputStream = {
+    new ByteArrayInputStream(bytes)
+  }
+
+  def stringToInputStream(s: String, charset: Charset): InputStream = {
+    bytesToInputStream(s.getBytes(charset))
+  }
+
+  def inputStreamToString(inputStream: InputStream, charset: Charset): String = {
+    val bytes = inputStreamToBytes(inputStream)
+    new String(bytes, charset)
+  }
+
+  def stringToReader(s: String): Reader = {
+    new StringReader(s)
+  }
+
+  def stringToOutputStream(s: String, charset: Charset, outputStream: OutputStream): Unit = {
+    outputStream.write(s.getBytes(charset))
+  }
+
+  def bytesToString(bytes: Array[Byte], charset: Charset): String = new String(bytes, charset)
 }
