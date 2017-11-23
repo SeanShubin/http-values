@@ -7,7 +7,7 @@ import scala.annotation.tailrec
 
 object IoUtil {
   @tailrec
-  def feedInputStreamToOutputStream(inputStream: InputStream, outputStream: OutputStream) {
+  def feedInputStreamToOutputStream(inputStream: InputStream, outputStream: OutputStream): Unit = {
     val byte = inputStream.read()
     if (byte != -1) {
       outputStream.write(byte)
@@ -16,7 +16,7 @@ object IoUtil {
   }
 
   @tailrec
-  def feedReaderToWriter(reader: Reader, writer: Writer) {
+  def feedReaderToWriter(reader: Reader, writer: Writer): Unit = {
     val char = reader.read()
     if (char != -1) {
       writer.write(char)
@@ -60,4 +60,11 @@ object IoUtil {
   }
 
   def bytesToString(bytes: Array[Byte], charset: Charset): String = new String(bytes, charset)
+
+  def stringToBytes(s: String, charset: Charset): Array[Byte] = s.getBytes(charset)
+
+  def bytesToOutputStream(bytes: Array[Byte], outputStream: OutputStream): Unit = {
+    val inputStream = bytesToInputStream(bytes)
+    feedInputStreamToOutputStream(inputStream, outputStream)
+  }
 }

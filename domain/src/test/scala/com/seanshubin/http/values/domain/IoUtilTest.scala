@@ -18,7 +18,16 @@ class IoUtilTest extends FunSuite {
     val original = "Hello, world!"
     val outputStream = new ByteArrayOutputStream()
     IoUtil.stringToOutputStream(original, charset, outputStream)
-    val string = IoUtil.bytesToString(outputStream.toByteArray, charset)
+    val string = bytesToString(outputStream.toByteArray, charset)
+    assert(string === "Hello, world!")
+  }
+
+  test("bytes to output stream") {
+    val original = "Hello, world!"
+    val bytes = stringToBytes(original, charset)
+    val outputStream = new ByteArrayOutputStream()
+    bytesToOutputStream(bytes, outputStream)
+    val string = bytesToString(outputStream.toByteArray, charset)
     assert(string === "Hello, world!")
   }
 
