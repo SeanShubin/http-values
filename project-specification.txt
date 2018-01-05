@@ -1,7 +1,7 @@
 {
   prefix [com seanshubin]
   name [http values]
-  description 'Http without mutable state'
+  description 'HTTP as a pure function'
   version 1.0.2
   developer {
     name 'Sean Shubin'
