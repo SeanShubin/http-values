@@ -28,7 +28,7 @@
       version 4.0.0
     }
     jetty-server {
-      groupId org.eclipse.jetty
+      group org.eclipse.jetty
       artifact jetty-server
       version 9.4.8.v20171121
     }
