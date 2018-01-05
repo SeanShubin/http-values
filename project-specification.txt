@@ -1,0 +1,53 @@
+{
+  prefix [com seanshubin]
+  name [http values]
+  description 'Generate project structure from a minimal specification'
+  version 0.1-SNAPSHOT
+  developer {
+    name 'Sean Shubin'
+    githubName SeanShubin
+    mavenUserName SeanShubin
+    organization 'Sean Shubin'
+    url http://seanshubin.com/
+  }
+  dependencies {
+    scala-library {
+      group org.scala-lang
+      artifact scala-library
+      version 2.12.4
+    }
+    scala-test {
+      group org.scalatest
+      artifact scalatest_2.12
+      version 3.0.4
+      scope test
+    }
+    servlet-api {
+      group javax.servlet
+      artifact javax.servlet-api
+      version 4.0.0
+    }
+    jetty-server {
+      groupId org.eclipse.jetty
+      artifact jetty-server
+      version 9.4.8.v20171121
+    }
+    apache-http-client {
+      group org.apache.httpcomponents
+      artifact httpclient
+      version 4.5.4
+    }
+    google-http-client {
+      group com.google.http-client
+      artifact google-http-client
+      version 1.23.0
+    }
+  }
+  modules {
+    client-apache [domain apache-http-client]
+    client-google [domain google-http-client]
+    domain        [servlet-api]
+    server-jetty  [domain client-apache client-google jetty-server]
+  }
+  detangler [server-jetty]
+}
