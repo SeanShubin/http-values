@@ -1,27 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
-                      http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
-    <!-- The Basics -->
-    <!--<groupId>...</groupId>-->
     <artifactId>http-values-client-apache</artifactId>
-    <!--<version>...</version>-->
-    <!--<packaging>...</packaging>-->
     <dependencies>
         <dependency>
             <groupId>com.seanshubin.http.values</groupId>
             <artifactId>http-values-domain</artifactId>
-            <version>${project.parent.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.scala-lang</groupId>
-            <artifactId>scala-library</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.scalatest</groupId>
-            <artifactId>scalatest_2.12</artifactId>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
@@ -33,11 +20,6 @@
         <artifactId>http-values-parent</artifactId>
         <version>1.0.2</version>
     </parent>
-    <!--<dependencyManagement>...</dependencyManagement>-->
-    <!--<modules>...</modules>-->
-    <!--<properties>...</properties>-->
-
-    <!-- Build Settings -->
     <build>
         <sourceDirectory>src/main/scala</sourceDirectory>
         <testSourceDirectory>src/test/scala</testSourceDirectory>
@@ -48,26 +30,5 @@
             </plugin>
         </plugins>
     </build>
-    <!--<reporting>...</reporting>-->
-
-    <!-- More Project Information -->
     <name>${project.groupId}:${project.artifactId}</name>
-    <!--<description>...</description>-->
-    <!--<url>...</url>-->
-    <!--<inceptionYear>...</inceptionYear>-->
-    <!--<licenses>...</licenses>-->
-    <!--<organization>...</organization>-->
-    <!--<developers>...</developers>-->
-    <!--<contributors>...</contributors>-->
-
-    <!-- Environment Settings -->
-    <!--<issueManagement>...</issueManagement>-->
-    <!--<ciManagement>...</ciManagement>-->
-    <!--<mailingLists>...</mailingLists>-->
-    <!--<scm>...</scm>-->
-    <!--<prerequisites>...</prerequisites>-->
-    <!--<repositories>...</repositories>-->
-    <!--<pluginRepositories>...</pluginRepositories>-->
-    <!--<distributionManagement>...</distributionManagement>-->
-    <!--<profiles>...</profiles>-->
 </project>

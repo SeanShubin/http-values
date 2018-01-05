@@ -4,11 +4,11 @@
   description 'HTTP as a pure function'
   version 1.0.2
   developer {
-    name 'Sean Shubin'
-    githubName SeanShubin
+    name         'Sean Shubin'
+    githubName    SeanShubin
     mavenUserName SeanShubin
     organization 'Sean Shubin'
-    url http://seanshubin.com/
+    url           http://seanshubin.com/
   }
   dependencies {
     scala-library {
