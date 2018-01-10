@@ -1,10 +1,7 @@
 {
-  reportDir target/detangled
+  reportDir server-jetty/target/detangled
   searchPaths
   [
-    ./client-apache/target/http-values-client-apache-1.0.2.jar
-    ./client-google/target/http-values-client-google-1.0.2.jar
-    ./domain/target/http-values-domain-1.0.2.jar
     ./server-jetty/target/http-values-server-jetty-1.0.2.jar
   ]
   level 2
@@ -32,5 +29,5 @@
   }
   ignoreFiles []
   canFailBuild true
-  allowedInCycle []
+  allowedInCycle server-jetty/detangler-allowed-in-cycle.txt
 }
