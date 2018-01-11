@@ -43,6 +43,7 @@
       version 1.23.0
     }
   }
+  global [scala-library scala-test]
   modules {
     client-apache [domain apache-http-client]
     client-google [domain google-http-client]

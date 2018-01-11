@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # halt the script if we encounter any errors
-set -e
+set -e -u -o pipefail
 
 # make sure we don't inherit any state from our local repository
 rm -rf ~/.m2/repository/com/seanshubin/http/values/
